@@ -2,7 +2,9 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using TeduBlog.Core.Domain.Identity;
+using TeduBlog.Core.SeedWorks;
 using TeduBlog.Data;
+using TeduBlog.Data.SeedWorks;
 
 namespace TeduBlog.Api
 {
@@ -41,6 +43,10 @@ namespace TeduBlog.Api
                 "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+";
                 options.User.RequireUniqueEmail = false;
             });
+
+            // Add Service to container
+            builder.Services.AddScoped(typeof(IRepositoryBase<,>), typeof(RepositoryBase<,>));
+            builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
             //Default config for ASP.NET Core
 
