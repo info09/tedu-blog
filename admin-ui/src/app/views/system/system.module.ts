@@ -12,7 +12,7 @@ import {
   NavModule,
   ProgressModule,
   TableModule,
-  TabsModule,
+  TabsModule
 } from '@coreui/angular';
 import { IconModule } from '@coreui/icons-angular';
 import { ChartjsModule } from '@coreui/angular-chartjs';
@@ -35,8 +35,10 @@ import { SystemRoutingModule } from './system-routing.module';
     ButtonGroupModule,
     ChartjsModule,
     AvatarModule,
-    TableModule,
+    TableModule
+    
   ],
-  declarations: [],
+  declarations: []
 })
-export class SystemModule {}
+export class SystemModule {
+}
