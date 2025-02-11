@@ -40,7 +40,7 @@ namespace TeduBlog.Data.SeedWorks
             return await _dbSet.ToListAsync();
         }
 
-        public async Task<T> GetByIdAsync(Key id)
+        public async Task<T?> GetByIdAsync(Key id)
         {
             return await _dbSet.FindAsync(id);
         }

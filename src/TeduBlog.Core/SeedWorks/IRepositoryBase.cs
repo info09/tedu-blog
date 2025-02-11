@@ -4,7 +4,7 @@ namespace TeduBlog.Core.SeedWorks
 {
     public interface IRepositoryBase<T, Key> where T : class
     {
-        Task<T> GetByIdAsync(Key id);
+        Task<T?> GetByIdAsync(Key id);
         Task<IEnumerable<T>> GetAllAsync();
         IEnumerable<T> Find(Expression<Func<T, bool>> expression);
         void Add(T entity);
