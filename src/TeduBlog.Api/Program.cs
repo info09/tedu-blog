@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using TeduBlog.Core.Domain.Identity;
 using TeduBlog.Core.SeedWorks;
 using TeduBlog.Data;
+using TeduBlog.Data.Repositories;
 using TeduBlog.Data.SeedWorks;
 
 namespace TeduBlog.Api
@@ -47,6 +48,23 @@ namespace TeduBlog.Api
             // Add Service to container
             builder.Services.AddScoped(typeof(IRepositoryBase<,>), typeof(RepositoryBase<,>));
             builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+
+            // Business services and repositories
+            var services = typeof(PostRepository).Assembly.GetTypes()
+                .Where(i => i.GetInterfaces().Any(i => i.Name == typeof(IRepositoryBase<,>).Name) && 
+                            !i.IsAbstract && 
+                            i.IsClass && 
+                            !i.IsGenericType);
+
+            foreach (var service in services)
+            {
+                var allInterfaces = service.GetInterfaces();
+                var directInterface = allInterfaces.Except(allInterfaces.SelectMany(i => i.GetInterfaces())).FirstOrDefault();
+                if (directInterface != null)
+                {
+                    builder.Services.Add(new ServiceDescriptor(directInterface, service, ServiceLifetime.Scoped));
+                }
+            }
 
             //Default config for ASP.NET Core
 

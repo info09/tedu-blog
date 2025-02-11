@@ -12,10 +12,12 @@ namespace TeduBlog.Data.SeedWorks
     public class RepositoryBase<T, Key> : IRepositoryBase<T, Key> where T : class
     {
         private readonly DbSet<T> _dbSet;
+        protected readonly ApplicationDbContext _context;
 
         public RepositoryBase(ApplicationDbContext context)
         {
             _dbSet = context.Set<T>();
+            _context = context;
         }
 
         public void Add(T entity)
