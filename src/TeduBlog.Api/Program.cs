@@ -65,6 +65,8 @@ namespace TeduBlog.Api
 
             app.MapControllers();
 
+            app.MigrateDatabase();
+
             app.Run();
         }
     }
