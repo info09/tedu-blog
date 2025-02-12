@@ -14,7 +14,6 @@ namespace TeduBlog.Data
         {
             var passwordHasher = new PasswordHasher<AppUser>();
             var rootAdminRoleId = Guid.NewGuid();
-            var rootUserRoleId = Guid.NewGuid();
             if (!context.Roles.Any())
             {
                 await context.Roles.AddAsync(new AppRole()
@@ -25,21 +24,12 @@ namespace TeduBlog.Data
                     NormalizedName = "ADMIN"
                 });
 
-                await context.Roles.AddAsync(new AppRole()
-                {
-                    Id = rootUserRoleId,
-                    DisplayName = "Người dùng",
-                    Name = "User",
-                    NormalizedName = "USER"
-                });
-
                 await context.SaveChangesAsync();
             }
 
             if (!context.Users.Any())
             {
                 var userAdminId = Guid.NewGuid();
-                var userId = Guid.NewGuid();
 
                 var userAdmin = new AppUser()
                 {
@@ -57,31 +47,10 @@ namespace TeduBlog.Data
                 userAdmin.PasswordHash = passwordHasher.HashPassword(userAdmin, "Admin@123$");
                 await context.Users.AddAsync(userAdmin);
 
-                var user = new AppUser()
-                {
-                    Id = userId,
-                    FirstName = "Huy",
-                    LastName = "Tran",
-                    Email = "huytq3103@gmail.com",
-                    NormalizedEmail = "HUYTQ3103@GMAIL.COM",
-                    UserName = "huytq",
-                    IsActive = true,
-                    SecurityStamp = Guid.NewGuid().ToString(),
-                    LockoutEnabled = false,
-                    DateCreated = DateTime.UtcNow,
-                };
-                user.PasswordHash = passwordHasher.HashPassword(user, "Admin@123$");
-                await context.Users.AddAsync(user);
-
                 await context.UserRoles.AddAsync(new IdentityUserRole<Guid>()
                 {
                     RoleId = rootAdminRoleId,
                     UserId = userAdminId,
-                });
-                await context.UserRoles.AddAsync(new IdentityUserRole<Guid>()
-                {
-                    RoleId = rootUserRoleId,
-                    UserId = userId,
                 });
                 await context.SaveChangesAsync();
             }

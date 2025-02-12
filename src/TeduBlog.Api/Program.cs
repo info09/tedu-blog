@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Swashbuckle.AspNetCore.SwaggerGen;
 using System.Reflection;
+using TeduBlog.Api.Services;
+using TeduBlog.Core.ConfigOptions;
 using TeduBlog.Core.Domain.Identity;
 using TeduBlog.Core.Models.Content;
 using TeduBlog.Core.SeedWorks;
@@ -69,7 +71,15 @@ namespace TeduBlog.Api
                 }
             }
 
+            // AutoMapper
             builder.Services.AddAutoMapper(typeof(PostInListDto));
+
+            // Authentication and Authorization
+            builder.Services.Configure<JwtTokenSettings>(configuration.GetSection("JwtTokenSettings"));
+            builder.Services.AddScoped<SignInManager<AppUser>, SignInManager<AppUser>>();
+            builder.Services.AddScoped<UserManager<AppUser>, UserManager<AppUser>>();
+            builder.Services.AddScoped<RoleManager<AppRole>, RoleManager<AppRole>>();
+            builder.Services.AddScoped<ITokenService, TokenService>();
 
             //Default config for ASP.NET Core
 
