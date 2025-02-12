@@ -12,6 +12,8 @@ import {
 } from '../../../api/admin-api.service.generated';
 import { AlertService } from '../../../shared/services/alert.service';
 import { Router } from '@angular/router';
+import { TokenStorage } from '../../../shared/services/token-storage.service';
+import { UrlConstants } from '../../../shared/constants/url.constant';
 
 @Component({
   selector: 'app-login',
@@ -24,7 +26,8 @@ export class LoginComponent {
     private fb: FormBuilder,
     private authApiClient: AdminApiAuthApiClient,
     private alertService: AlertService,
-    private router: Router
+    private router: Router,
+    private tokenStorage: TokenStorage
   ) {
     this.loginForm = this.fb.group({
       userName: new FormControl('', Validators.required),
@@ -40,7 +43,10 @@ export class LoginComponent {
 
     this.authApiClient.login(request).subscribe({
       next: (res: AuthenticatedResult) => {
-        this.router.navigate(['/dashboard']);
+        this.tokenStorage.saveToken(res.token!);
+        this.tokenStorage.saveRefreshToken(res.refreshToken!);
+        this.tokenStorage.saveUser(res);
+        this.router.navigate([UrlConstants.HOME]);
       },
       error: (error: any) => {
         console.log(
