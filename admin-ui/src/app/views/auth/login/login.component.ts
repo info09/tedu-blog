@@ -14,7 +14,7 @@ import { AlertService } from '../../../shared/services/alert.service';
 import { Router } from '@angular/router';
 import { TokenStorageService } from '../../../shared/services/token-storage.service';
 import { UrlConstants } from '../../../shared/constants/url.constant';
-import { Subject } from 'rxjs';
+import { Subject, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-login',
@@ -49,21 +49,24 @@ export class LoginComponent implements OnDestroy {
       password: this.loginForm.controls['password']?.value,
     });
 
-    this.authApiClient.login(request).subscribe({
-      next: (res: AuthenticatedResult) => {
-        this.tokenStorage.saveToken(res.token!);
-        this.tokenStorage.saveRefreshToken(res.refreshToken!);
-        this.tokenStorage.saveUser(res);
-        this.router.navigate([UrlConstants.HOME]);
-      },
-      error: (error: any) => {
-        console.log(
-          '🚀 ~ LoginComponent ~ this.authApiClient.login ~ error:',
-          error
-        );
-        this.alertService.showError('Login Invalid');
-        this.loading = false;
-      },
-    });
+    this.authApiClient
+      .login(request)
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe({
+        next: (res: AuthenticatedResult) => {
+          this.tokenStorage.saveToken(res.token!);
+          this.tokenStorage.saveRefreshToken(res.refreshToken!);
+          this.tokenStorage.saveUser(res);
+          this.router.navigate([UrlConstants.HOME]);
+        },
+        error: (error: any) => {
+          console.log(
+            '🚀 ~ LoginComponent ~ this.authApiClient.login ~ error:',
+            error
+          );
+          this.alertService.showError('Login Invalid');
+          this.loading = false;
+        },
+      });
   }
 }

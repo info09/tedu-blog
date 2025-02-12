@@ -24,14 +24,12 @@ namespace TeduBlog.Api.Controllers.AdminApi
         private readonly SignInManager<AppUser> _signInManager;
         private readonly ITokenService _tokenService;
         private readonly RoleManager<AppRole> _roleManager;
-        private readonly ApplicationDbContext _context;
 
-        public AuthController(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager, ITokenService tokenService, ApplicationDbContext context, RoleManager<AppRole> roleManager)
+        public AuthController(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager, ITokenService tokenService, RoleManager<AppRole> roleManager)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _tokenService = tokenService;
-            _context = context;
             _roleManager = roleManager;
         }
 
@@ -40,7 +38,7 @@ namespace TeduBlog.Api.Controllers.AdminApi
         {
             if (request == null) return BadRequest("Invalid request");
 
-            var user = await _context.Set<AppUser>().FirstOrDefaultAsync(i => i.UserName == request.UserName);
+            var user = await _userManager.FindByNameAsync(request.UserName);
             if (user == null || user.IsActive == false || user.LockoutEnabled) return BadRequest("Đăng nhập không đúng");
 
             var result = await _signInManager.PasswordSignInAsync(user, request.Password, false, true);
