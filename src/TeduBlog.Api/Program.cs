@@ -1,4 +1,4 @@
-
+﻿
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Swashbuckle.AspNetCore.SwaggerGen;
@@ -22,6 +22,17 @@ namespace TeduBlog.Api
             var builder = WebApplication.CreateBuilder(args);
             var configuration = builder.Configuration;
             var connectionString = configuration.GetConnectionString("DefaultConnection");
+
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy("AllowSpecificOrigin", policy =>
+                {
+                    policy.WithOrigins(configuration["AllowedOrigins"]) // Chỉ định origin cụ thể
+                          .AllowCredentials()
+                          .AllowAnyMethod()
+                          .AllowAnyHeader();
+                });
+            });
 
             // Add services to the container.
 
@@ -115,6 +126,8 @@ namespace TeduBlog.Api
                     c.DisplayRequestDuration();
                 });
             }
+
+            app.UseCors("AllowSpecificOrigin");
 
             app.UseHttpsRedirection();
 

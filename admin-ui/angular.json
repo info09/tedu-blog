@@ -31,7 +31,11 @@
             "inlineStyleLanguage": "scss",
             "preserveSymlinks": true,
             "assets": ["src/favicon.ico", "src/assets"],
-            "styles": ["src/scss/styles.scss"],
+            "styles": [
+              "node_modules/primeng/resources/themes/lara-light-blue/theme.css",
+              "node_modules/primeng/resources/primeng.min.css",
+              "src/scss/styles.scss"
+            ],
             "scripts": [],
             "allowedCommonJsDependencies": ["chart.js"]
           },
