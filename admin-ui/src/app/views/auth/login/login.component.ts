@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import {
   FormBuilder,
   FormControl,
@@ -14,14 +14,17 @@ import { AlertService } from '../../../shared/services/alert.service';
 import { Router } from '@angular/router';
 import { TokenStorage } from '../../../shared/services/token-storage.service';
 import { UrlConstants } from '../../../shared/constants/url.constant';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
 })
-export class LoginComponent {
+export class LoginComponent implements OnDestroy {
   loginForm: FormGroup;
+  private ngUnsubscribe = new Subject<void>();
+  loading = false;
   constructor(
     private fb: FormBuilder,
     private authApiClient: AdminApiAuthApiClient,
@@ -34,8 +37,13 @@ export class LoginComponent {
       password: new FormControl('', Validators.required),
     });
   }
+  ngOnDestroy(): void {
+    this.ngUnsubscribe.next();
+    this.ngUnsubscribe.complete();
+  }
 
   login() {
+    this.loading = true;
     var request: LoginRequest = new LoginRequest({
       userName: this.loginForm.controls['userName']?.value,
       password: this.loginForm.controls['password']?.value,
@@ -54,6 +62,7 @@ export class LoginComponent {
           error
         );
         this.alertService.showError('Login Invalid');
+        this.loading = false;
       },
     });
   }
