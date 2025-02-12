@@ -12,7 +12,7 @@ import {
 } from '../../../api/admin-api.service.generated';
 import { AlertService } from '../../../shared/services/alert.service';
 import { Router } from '@angular/router';
-import { TokenStorage } from '../../../shared/services/token-storage.service';
+import { TokenStorageService } from '../../../shared/services/token-storage.service';
 import { UrlConstants } from '../../../shared/constants/url.constant';
 import { Subject } from 'rxjs';
 
@@ -30,7 +30,7 @@ export class LoginComponent implements OnDestroy {
     private authApiClient: AdminApiAuthApiClient,
     private alertService: AlertService,
     private router: Router,
-    private tokenStorage: TokenStorage
+    private tokenStorage: TokenStorageService
   ) {
     this.loginForm = this.fb.group({
       userName: new FormControl('', Validators.required),

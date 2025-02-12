@@ -1,5 +1,7 @@
-import { Component } from '@angular/core';
-
+import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { TokenStorageService } from '../../shared/services/token-storage.service';
+import { UrlConstants } from '../../shared/constants/url.constant';
 import { navItems } from './_nav';
 
 @Component({
@@ -7,9 +9,35 @@ import { navItems } from './_nav';
   templateUrl: './default-layout.component.html',
   styleUrls: ['./default-layout.component.scss'],
 })
-export class DefaultLayoutComponent {
+export class DefaultLayoutComponent implements OnInit {
+  public navItems = [];
 
-  public navItems = navItems;
+  constructor(
+    private tokenService: TokenStorageService,
+    private router: Router
+  ) {}
 
-  constructor() {}
+  ngOnInit(): void {
+    var user = this.tokenService.getUser();
+    if (user == null) this.router.navigate([UrlConstants.LOGIN]);
+    var permissions = JSON.parse(user!.permissions);
+    for (var index = 0; index < navItems.length; index++) {
+      for (
+        var childIndex = 0;
+        childIndex < navItems[index].children?.length;
+        childIndex++
+      ) {
+        if (
+          navItems[index].children[childIndex].attributes &&
+          permissions.filter(
+            (x) =>
+              x == navItems[index].children[childIndex].attributes['policyName']
+          ).length == 0
+        ) {
+          navItems[index].children[childIndex].class = 'hidden';
+        }
+      }
+    }
+    this.navItems = navItems;
+  }
 }

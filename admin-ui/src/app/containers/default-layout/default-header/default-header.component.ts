@@ -2,7 +2,7 @@ import { Component, Input } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 
 import { ClassToggleService, HeaderComponent } from '@coreui/angular';
-import { TokenStorage } from '../../../shared/services/token-storage.service';
+import { TokenStorageService } from '../../../shared/services/token-storage.service';
 import { Router } from '@angular/router';
 import { UrlConstants } from '../../../shared/constants/url.constant';
 
@@ -19,7 +19,7 @@ export class DefaultHeaderComponent extends HeaderComponent {
 
   constructor(
     private classToggler: ClassToggleService,
-    private tokenStorage: TokenStorage,
+    private tokenStorage: TokenStorageService,
     private router: Router
   ) {
     super();

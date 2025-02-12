@@ -7,7 +7,7 @@ const USER_KEY = 'auth-user';
 @Injectable({
   providedIn: 'root',
 })
-export class TokenStorage {
+export class TokenStorageService {
   constructor() {}
 
   signOut(): void {
