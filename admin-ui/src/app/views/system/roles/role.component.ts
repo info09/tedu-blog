@@ -26,7 +26,7 @@ export class RoleComponent implements OnInit, OnDestroy {
   public totalCount: number | undefined;
 
   // Business
-  public items: RoleDto[] | undefined;
+  public items: RoleDto[];
   public selectedItems: RoleDto[] = [];
   public keyword: string = '';
 
@@ -51,7 +51,7 @@ export class RoleComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe({
         next: (res: RoleDtoPagedResult) => {
-          this.items = res.items;
+          this.items = res.items || [];
           this.totalCount = res.rowCount;
           this.toggleBlockUI(false);
         },

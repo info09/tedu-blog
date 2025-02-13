@@ -52,6 +52,7 @@ import {
   AdminApiRoleApiClient,
   AdminApiTestApiClient,
   AdminApiTokenApiClient,
+  AdminApiUserApiClient,
 } from './api/admin-api.service.generated';
 import { ToastModule } from 'primeng/toast';
 import { ConfirmationService, MessageService } from 'primeng/api';
@@ -130,6 +131,7 @@ import { UtilityService } from './shared/services/utility.service';
     AdminApiTestApiClient,
     AdminApiTokenApiClient,
     AdminApiRoleApiClient,
+    AdminApiUserApiClient,
     DialogService,
     ConfirmationService,
     UtilityService,

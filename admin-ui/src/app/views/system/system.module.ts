@@ -17,6 +17,10 @@ import { TeduSharedModule } from '../../shared/modules/tedu-shared.module';
 import { KeyFilterModule } from 'primeng/keyfilter';
 import { RoleDetailComponent } from './roles/role-detail.component';
 import { PermissionGrantComponent } from './roles/permission-grant.component';
+import { BadgeModule } from 'primeng/badge';
+import { PickListModule } from 'primeng/picklist';
+import { ImageModule } from 'primeng/image';
+import { UserDetailComponent } from './users/user-detail.component';
 
 @NgModule({
   imports: [
@@ -34,12 +38,16 @@ import { PermissionGrantComponent } from './roles/permission-grant.component';
     SharedModule,
     KeyFilterModule,
     TeduSharedModule,
+    BadgeModule,
+    PickListModule,
+    ImageModule,
   ],
   declarations: [
     UserComponent,
     RoleComponent,
     RoleDetailComponent,
     PermissionGrantComponent,
+    UserDetailComponent,
   ],
 })
 export class SystemModule {}
