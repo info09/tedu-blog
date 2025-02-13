@@ -10,7 +10,7 @@ using TeduBlog.Api.Extensions;
 using TeduBlog.Api.Services;
 using TeduBlog.Core.Domain.Identity;
 using TeduBlog.Core.Models.Auth;
-using TeduBlog.Core.Models.System;
+using TeduBlog.Core.Models.System.Role;
 using TeduBlog.Core.SeedWorks.Constants;
 using TeduBlog.Data;
 

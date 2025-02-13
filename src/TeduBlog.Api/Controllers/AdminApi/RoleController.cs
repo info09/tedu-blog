@@ -9,7 +9,7 @@ using TeduBlog.Api.Extensions;
 using TeduBlog.Api.Filters;
 using TeduBlog.Core.Domain.Identity;
 using TeduBlog.Core.Models;
-using TeduBlog.Core.Models.System;
+using TeduBlog.Core.Models.System.Role;
 using TeduBlog.Core.SeedWorks.Constants;
 
 namespace TeduBlog.Api.Controllers.AdminApi

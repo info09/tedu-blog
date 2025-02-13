@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using TeduBlog.Core.Domain.Identity;
 
-namespace TeduBlog.Core.Models.System
+namespace TeduBlog.Core.Models.System.Role
 {
     public class RoleDto
     {

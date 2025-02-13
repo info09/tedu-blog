@@ -1,4 +1,4 @@
-﻿namespace TeduBlog.Core.Models.System
+﻿namespace TeduBlog.Core.Models.System.Role
 {
     public class PermissionDto
     {
