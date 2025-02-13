@@ -66,7 +66,9 @@ const APP_CONTAINERS = [
   DefaultHeaderComponent,
   DefaultLayoutComponent,
 ];
-import { DialogService } from 'primeng/dynamicdialog';
+import { DialogService, DynamicDialogModule } from 'primeng/dynamicdialog';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { UtilityService } from './shared/services/utility.service';
 
 @NgModule({
   declarations: [AppComponent, ...APP_CONTAINERS],
@@ -99,6 +101,8 @@ import { DialogService } from 'primeng/dynamicdialog';
     NgScrollbarModule,
     ToastModule,
     HttpClientModule,
+    ConfirmDialogModule,
+    DynamicDialogModule,
   ],
   providers: [
     { provide: ADMIN_API_BASE_URL, useValue: environment.API_URL },
@@ -128,6 +132,7 @@ import { DialogService } from 'primeng/dynamicdialog';
     AdminApiRoleApiClient,
     DialogService,
     ConfirmationService,
+    UtilityService,
   ],
   bootstrap: [AppComponent],
 })

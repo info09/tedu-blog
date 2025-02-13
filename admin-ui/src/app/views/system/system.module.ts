@@ -13,6 +13,9 @@ import { SharedModule } from 'primeng/api';
 import { TableModule } from 'primeng/table';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
+import { TeduSharedModule } from '../../shared/modules/tedu-shared.module';
+import { KeyFilterModule } from 'primeng/keyfilter';
+import { RoleDetailComponent } from './roles/role-detail.component';
 
 @NgModule({
   imports: [
@@ -28,7 +31,9 @@ import { InputTextModule } from 'primeng/inputtext';
     ButtonModule,
     InputTextModule,
     SharedModule,
+    KeyFilterModule,
+    TeduSharedModule,
   ],
-  declarations: [UserComponent, RoleComponent],
+  declarations: [UserComponent, RoleComponent, RoleDetailComponent],
 })
 export class SystemModule {}
