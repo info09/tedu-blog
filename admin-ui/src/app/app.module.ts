@@ -49,11 +49,12 @@ import { IconModule, IconSetService } from '@coreui/icons-angular';
 import {
   ADMIN_API_BASE_URL,
   AdminApiAuthApiClient,
+  AdminApiRoleApiClient,
   AdminApiTestApiClient,
   AdminApiTokenApiClient,
 } from './api/admin-api.service.generated';
 import { ToastModule } from 'primeng/toast';
-import { MessageService } from 'primeng/api';
+import { ConfirmationService, MessageService } from 'primeng/api';
 import { AlertService } from './shared/services/alert.service';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { TokenStorageService } from './shared/services/token-storage.service';
@@ -65,6 +66,7 @@ const APP_CONTAINERS = [
   DefaultHeaderComponent,
   DefaultLayoutComponent,
 ];
+import { DialogService } from 'primeng/dynamicdialog';
 
 @NgModule({
   declarations: [AppComponent, ...APP_CONTAINERS],
@@ -123,6 +125,9 @@ const APP_CONTAINERS = [
     AuthGuard,
     AdminApiTestApiClient,
     AdminApiTokenApiClient,
+    AdminApiRoleApiClient,
+    DialogService,
+    ConfirmationService,
   ],
   bootstrap: [AppComponent],
 })

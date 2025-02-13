@@ -55,7 +55,7 @@ export const navItems: INavData[] = [
     iconComponent: { name: 'cil-notes' },
     children: [
       {
-        name: 'Quyền',
+        name: 'Quyền người dùng',
         url: '/system/roles',
         attributes: {
           policyName: 'Permissions.Roles.View',

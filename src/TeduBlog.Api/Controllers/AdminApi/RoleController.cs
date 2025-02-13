@@ -50,7 +50,7 @@ namespace TeduBlog.Api.Controllers.AdminApi
                 PageSize = pageSize,
                 CurrentPage = pageIndex
             };
-            return Ok();
+            return Ok(pagination);
         }
 
         [HttpGet("{id}")]
