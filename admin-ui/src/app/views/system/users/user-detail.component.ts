@@ -212,7 +212,21 @@ export class UserDetailComponent implements OnInit, OnDestroy {
     }
   }
 
-  onFileChange(event) {}
+  onFileChange(event) {
+    const reader = new FileReader();
+    if (event.target.files && event.target.files.length) {
+      const [file] = event.target.files;
+      reader.readAsDataURL(file);
+      reader.onload = () => {
+        this.form.patchValue({
+          avatar: file.name,
+          avatarFile: reader.result,
+        });
+
+        this.cd.markForCheck();
+      };
+    }
+  }
 
   private toggleBlockUI(enabled: boolean) {
     if (enabled == true) {

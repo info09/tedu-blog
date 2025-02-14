@@ -1,18 +1,18 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+
 using System.IdentityModel.Tokens.Jwt;
 using System.Reflection;
 using System.Security.Claims;
 using System.Text.Json;
+
 using TeduBlog.Api.Extensions;
 using TeduBlog.Api.Services;
 using TeduBlog.Core.Domain.Identity;
 using TeduBlog.Core.Models.Auth;
 using TeduBlog.Core.Models.System.Role;
 using TeduBlog.Core.SeedWorks.Constants;
-using TeduBlog.Data;
 
 namespace TeduBlog.Api.Controllers.AdminApi
 {
@@ -38,7 +38,7 @@ namespace TeduBlog.Api.Controllers.AdminApi
         {
             if (request == null) return BadRequest("Invalid request");
 
-            var user = await _userManager.FindByNameAsync(request.UserName);
+            var user = await _userManager.Users.FirstOrDefaultAsync(i => i.UserName == request.UserName);
             if (user == null || user.IsActive == false || user.LockoutEnabled) return BadRequest("Đăng nhập không đúng");
 
             var result = await _signInManager.PasswordSignInAsync(user, request.Password, false, true);

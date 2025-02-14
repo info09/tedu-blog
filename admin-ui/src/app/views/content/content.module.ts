@@ -18,6 +18,7 @@ import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 import { TeduSharedModule } from '../../shared/modules/tedu-shared.module';
 import { PostCategoryDetailComponent } from './post-categories/post-category-detail.component';
+import { PostComponent } from './posts/post.component';
 @NgModule({
   imports: [
     ContentRoutingModule,
@@ -37,6 +38,10 @@ import { PostCategoryDetailComponent } from './post-categories/post-category-det
     ButtonModule,
     InputTextModule,
   ],
-  declarations: [PostCategoryComponent, PostCategoryDetailComponent],
+  declarations: [
+    PostComponent,
+    PostCategoryComponent,
+    PostCategoryDetailComponent,
+  ],
 })
 export class ContentModule {}

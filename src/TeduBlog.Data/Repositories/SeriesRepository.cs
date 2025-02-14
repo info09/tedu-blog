@@ -1,4 +1,7 @@
 ﻿using AutoMapper;
+
+using Microsoft.EntityFrameworkCore;
+
 using TeduBlog.Core.Domain.Content;
 using TeduBlog.Core.Models;
 using TeduBlog.Core.Models.Content.Post;
@@ -15,29 +18,56 @@ namespace TeduBlog.Data.Repositories
             _mapper = mapper;
         }
 
-        public Task AddPostToSeries(Guid seriesId, Guid postId, int sortOrder)
+        public async Task AddPostToSeries(Guid seriesId, Guid postId, int sortOrder)
         {
-            throw new NotImplementedException();
+            var postInSeries = await _context.PostInSeries.FirstOrDefaultAsync(i => i.PostId == postId && i.SeriesId == seriesId);
+            if (postInSeries == null)
+            {
+                await _context.PostInSeries.AddAsync(new PostInSeries
+                {
+                    SeriesId = seriesId,
+                    PostId = postId,
+                    DisplayOrder = sortOrder
+                });
+            }
         }
 
-        public Task<PagedResult<SeriesInListDto>> GetAllPaging(string? keyword, int pageIndex = 1, int pageSize = 10)
+        public async Task<PagedResult<SeriesInListDto>> GetAllPaging(string? keyword, int pageIndex = 1, int pageSize = 10)
         {
-            throw new NotImplementedException();
+            var query = _context.Series.AsQueryable();
+            query = !string.IsNullOrEmpty(keyword) ? query.Where(i => i.Name.ToLower().Contains(keyword.ToLower())) : query;
+            var totalRow = await query.CountAsync();
+            query = query.OrderByDescending(i => i.DateCreated).Skip((pageIndex - 1) * pageSize).Take(pageSize);
+            return new PagedResult<SeriesInListDto>
+            {
+                Items = await _mapper.ProjectTo<SeriesInListDto>(query).ToListAsync(),
+                RowCount = totalRow,
+                PageSize = pageSize,
+                CurrentPage = pageIndex
+            };
         }
 
-        public Task<List<PostInListDto>> GetAllPostsInSeries(Guid seriesId)
+        public async Task<List<PostInListDto>> GetAllPostsInSeries(Guid seriesId)
         {
-            throw new NotImplementedException();
+            var query = from pis in _context.PostInSeries
+                        join p in _context.Posts on pis.PostId equals p.Id
+                        where pis.SeriesId == seriesId
+                        select p;
+            return await _mapper.ProjectTo<PostInListDto>(query).ToListAsync();
         }
 
-        public Task<bool> IsPostInSeries(Guid seriesId, Guid postId)
+        public async Task<bool> IsPostInSeries(Guid seriesId, Guid postId)
         {
-            throw new NotImplementedException();
+            return await _context.PostInSeries.AnyAsync(i => i.SeriesId == seriesId && i.PostId == postId);
         }
 
-        public Task RemovePostToSeries(Guid seriesId, Guid postId)
+        public async Task RemovePostToSeries(Guid seriesId, Guid postId)
         {
-            throw new NotImplementedException();
+            var postInSeries = await _context.PostInSeries.FirstOrDefaultAsync(i => i.PostId == postId && i.SeriesId == seriesId);
+            if (postInSeries != null)
+            {
+                _context.PostInSeries.Remove(postInSeries);
+            }
         }
     }
 }

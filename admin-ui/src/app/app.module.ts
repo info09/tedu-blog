@@ -49,6 +49,7 @@ import { IconModule, IconSetService } from '@coreui/icons-angular';
 import {
   ADMIN_API_BASE_URL,
   AdminApiAuthApiClient,
+  AdminApiPostApiClient,
   AdminApiPostCategoryApiClient,
   AdminApiRoleApiClient,
   AdminApiTestApiClient,
@@ -135,6 +136,7 @@ import { SharedPermissionDirective } from './shared/directives/shared-directives
     AdminApiRoleApiClient,
     AdminApiUserApiClient,
     AdminApiPostCategoryApiClient,
+    AdminApiPostApiClient,
     DialogService,
     ConfirmationService,
     UtilityService,

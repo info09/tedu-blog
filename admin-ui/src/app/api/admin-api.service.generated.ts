@@ -2390,6 +2390,11 @@ export class PostDto implements IPostDto {
     thumbnail?: string | undefined;
     viewCount?: number;
     dateCreated?: Date;
+    categorySlug!: string | undefined;
+    categoryName!: string | undefined;
+    authorUserName?: string | undefined;
+    authorName?: string | undefined;
+    status?: PostStatus;
     categoryId?: string;
     content?: string | undefined;
     authorUserId?: string;
@@ -2399,7 +2404,6 @@ export class PostDto implements IPostDto {
     dateModified?: Date | undefined;
     isPaid?: boolean;
     royaltyAmount?: number;
-    status?: PostStatus;
 
     constructor(data?: IPostDto) {
         if (data) {
@@ -2419,6 +2423,11 @@ export class PostDto implements IPostDto {
             this.thumbnail = _data["thumbnail"];
             this.viewCount = _data["viewCount"];
             this.dateCreated = _data["dateCreated"] ? new Date(_data["dateCreated"].toString()) : <any>undefined;
+            this.categorySlug = _data["categorySlug"];
+            this.categoryName = _data["categoryName"];
+            this.authorUserName = _data["authorUserName"];
+            this.authorName = _data["authorName"];
+            this.status = _data["status"];
             this.categoryId = _data["categoryId"];
             this.content = _data["content"];
             this.authorUserId = _data["authorUserId"];
@@ -2428,7 +2437,6 @@ export class PostDto implements IPostDto {
             this.dateModified = _data["dateModified"] ? new Date(_data["dateModified"].toString()) : <any>undefined;
             this.isPaid = _data["isPaid"];
             this.royaltyAmount = _data["royaltyAmount"];
-            this.status = _data["status"];
         }
     }
 
@@ -2448,6 +2456,11 @@ export class PostDto implements IPostDto {
         data["thumbnail"] = this.thumbnail;
         data["viewCount"] = this.viewCount;
         data["dateCreated"] = this.dateCreated ? this.dateCreated.toISOString() : <any>undefined;
+        data["categorySlug"] = this.categorySlug;
+        data["categoryName"] = this.categoryName;
+        data["authorUserName"] = this.authorUserName;
+        data["authorName"] = this.authorName;
+        data["status"] = this.status;
         data["categoryId"] = this.categoryId;
         data["content"] = this.content;
         data["authorUserId"] = this.authorUserId;
@@ -2457,7 +2470,6 @@ export class PostDto implements IPostDto {
         data["dateModified"] = this.dateModified ? this.dateModified.toISOString() : <any>undefined;
         data["isPaid"] = this.isPaid;
         data["royaltyAmount"] = this.royaltyAmount;
-        data["status"] = this.status;
         return data;
     }
 }
@@ -2470,6 +2482,11 @@ export interface IPostDto {
     thumbnail?: string | undefined;
     viewCount?: number;
     dateCreated?: Date;
+    categorySlug: string | undefined;
+    categoryName: string | undefined;
+    authorUserName?: string | undefined;
+    authorName?: string | undefined;
+    status?: PostStatus;
     categoryId?: string;
     content?: string | undefined;
     authorUserId?: string;
@@ -2479,7 +2496,6 @@ export interface IPostDto {
     dateModified?: Date | undefined;
     isPaid?: boolean;
     royaltyAmount?: number;
-    status?: PostStatus;
 }
 
 export class PostInListDto implements IPostInListDto {
@@ -2490,6 +2506,11 @@ export class PostInListDto implements IPostInListDto {
     thumbnail?: string | undefined;
     viewCount?: number;
     dateCreated?: Date;
+    categorySlug!: string | undefined;
+    categoryName!: string | undefined;
+    authorUserName?: string | undefined;
+    authorName?: string | undefined;
+    status?: PostStatus;
 
     constructor(data?: IPostInListDto) {
         if (data) {
@@ -2509,6 +2530,11 @@ export class PostInListDto implements IPostInListDto {
             this.thumbnail = _data["thumbnail"];
             this.viewCount = _data["viewCount"];
             this.dateCreated = _data["dateCreated"] ? new Date(_data["dateCreated"].toString()) : <any>undefined;
+            this.categorySlug = _data["categorySlug"];
+            this.categoryName = _data["categoryName"];
+            this.authorUserName = _data["authorUserName"];
+            this.authorName = _data["authorName"];
+            this.status = _data["status"];
         }
     }
 
@@ -2528,6 +2554,11 @@ export class PostInListDto implements IPostInListDto {
         data["thumbnail"] = this.thumbnail;
         data["viewCount"] = this.viewCount;
         data["dateCreated"] = this.dateCreated ? this.dateCreated.toISOString() : <any>undefined;
+        data["categorySlug"] = this.categorySlug;
+        data["categoryName"] = this.categoryName;
+        data["authorUserName"] = this.authorUserName;
+        data["authorName"] = this.authorName;
+        data["status"] = this.status;
         return data;
     }
 }
@@ -2540,6 +2571,11 @@ export interface IPostInListDto {
     thumbnail?: string | undefined;
     viewCount?: number;
     dateCreated?: Date;
+    categorySlug: string | undefined;
+    categoryName: string | undefined;
+    authorUserName?: string | undefined;
+    authorName?: string | undefined;
+    status?: PostStatus;
 }
 
 export class PostInListDtoPagedResult implements IPostInListDtoPagedResult {
@@ -2615,12 +2651,10 @@ export interface IPostInListDtoPagedResult {
 }
 
 export enum PostStatus {
+    _0 = 0,
     _1 = 1,
     _2 = 2,
     _3 = 3,
-    _4 = 4,
-    _5 = 5,
-    _6 = 6,
 }
 
 export class RoleClaimsDto implements IRoleClaimsDto {
