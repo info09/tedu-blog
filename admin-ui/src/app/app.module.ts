@@ -70,6 +70,7 @@ const APP_CONTAINERS = [
 import { DialogService, DynamicDialogModule } from 'primeng/dynamicdialog';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { UtilityService } from './shared/services/utility.service';
+import { SharedPermissionDirective } from './shared/directives/shared-directives.module';
 
 @NgModule({
   declarations: [AppComponent, ...APP_CONTAINERS],

@@ -21,6 +21,10 @@ import { BadgeModule } from 'primeng/badge';
 import { PickListModule } from 'primeng/picklist';
 import { ImageModule } from 'primeng/image';
 import { UserDetailComponent } from './users/user-detail.component';
+import { ChangeEmailComponent } from './users/change-email.component';
+import { SetPasswordComponent } from './users/set-password.component';
+import { RoleAssignComponent } from './users/role-assign.component';
+import { SharedPermissionDirective } from '../../shared/directives/shared-directives.module';
 
 @NgModule({
   imports: [
@@ -41,6 +45,7 @@ import { UserDetailComponent } from './users/user-detail.component';
     BadgeModule,
     PickListModule,
     ImageModule,
+    SharedPermissionDirective,
   ],
   declarations: [
     UserComponent,
@@ -48,6 +53,9 @@ import { UserDetailComponent } from './users/user-detail.component';
     RoleDetailComponent,
     PermissionGrantComponent,
     UserDetailComponent,
+    ChangeEmailComponent,
+    SetPasswordComponent,
+    RoleAssignComponent,
   ],
 })
 export class SystemModule {}

@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using TeduBlog.Api.Extensions;
 using TeduBlog.Api.Filters;
 using TeduBlog.Core.Domain.Identity;
 using TeduBlog.Core.Models;
@@ -109,6 +110,81 @@ namespace TeduBlog.Api.Controllers.AdminApi
                     return NotFound();
                 }
                 await _userManager.DeleteAsync(user);
+            }
+            return Ok();
+        }
+
+        [HttpPut("change-email/{id}")]
+        [Authorize(Permissions.Users.Edit)]
+        public async Task<IActionResult> ChangeEmail(Guid id, [FromBody] ChangeEmailRequest request)
+        {
+            var user = await _userManager.FindByIdAsync(id.ToString());
+            if (user == null)
+                return NotFound();
+
+            var token = await _userManager.GenerateChangeEmailTokenAsync(user, request.Email);
+            var result = await _userManager.ChangeEmailAsync(user, request.Email, token);
+            if (!result.Succeeded)
+            {
+                return BadRequest(string.Join("<br>", result.Errors.Select(x => x.Description)));
+            }
+            return Ok();
+        }
+
+        [HttpPut("set-password/{id}")]
+        [Authorize(Permissions.Users.Edit)]
+        public async Task<IActionResult> SetPassword(Guid id, [FromBody] SetPasswordRequest request)
+        {
+            var user = await _userManager.FindByIdAsync(id.ToString());
+            if (user == null)
+                return NotFound();
+
+            user.PasswordHash = _userManager.PasswordHasher.HashPassword(user, request.NewPassword);
+            var result = await _userManager.UpdateAsync(user);
+            if (!result.Succeeded)
+            {
+                return BadRequest(string.Join("<br>", result.Errors.Select(x => x.Description)));
+            }
+            return Ok();
+        }
+
+        [HttpPut("change-password-current-user")]
+        [Authorize(Permissions.Users.Edit)]
+        public async Task<IActionResult> ChangePassword([FromBody] ChangeMyPasswordRequest request)
+        {
+            var user = await _userManager.FindByIdAsync(User.GetUserId().ToString());
+            if (user == null)
+                return NotFound();
+
+            var result = await _userManager.ChangePasswordAsync(user, request.OldPassword, request.NewPassword);
+            if (!result.Succeeded)
+            {
+                return BadRequest(string.Join("<br>", result.Errors.Select(x => x.Description)));
+            }
+            return Ok();
+        }
+
+        [HttpPut("{id}/assign-users")]
+        [ValidateModel]
+        [Authorize(Permissions.Users.Edit)]
+        public async Task<IActionResult> AssignRolesToUser(string id, [FromBody] string[] roles)
+        {
+            var user = await _userManager.FindByIdAsync(id);
+            if (user == null)
+            {
+                return NotFound();
+            }
+            var currentRoles = await _userManager.GetRolesAsync(user);
+            var removedResult = await _userManager.RemoveFromRolesAsync(user, currentRoles);
+            var addedResult = await _userManager.AddToRolesAsync(user, roles);
+            if (!addedResult.Succeeded || !removedResult.Succeeded)
+            {
+                List<IdentityError> addedErrorList = addedResult.Errors.ToList();
+                List<IdentityError> removedErrorList = removedResult.Errors.ToList();
+                var errorList = new List<IdentityError>();
+                errorList.AddRange(addedErrorList);
+                errorList.AddRange(removedErrorList);
+                return BadRequest(string.Join("<br/>", errorList.Select(x => x.Description)));
             }
             return Ok();
         }

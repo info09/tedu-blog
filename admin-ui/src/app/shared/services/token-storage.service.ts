@@ -28,6 +28,10 @@ export class TokenStorageService {
     return window.localStorage.getItem(TOKEN_KEY);
   }
 
+  isAuthenticated(): boolean {
+    return this.getUser() != null;
+  }
+
   public saveRefreshToken(token: string): void {
     window.localStorage.removeItem(REFRESH_TOKEN_KEY);
     window.localStorage.setItem(REFRESH_TOKEN_KEY, token);

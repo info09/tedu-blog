@@ -10,6 +10,9 @@ import { AlertService } from '../../../shared/services/alert.service';
 import { ConfirmationService } from 'primeng/api';
 import { UserDetailComponent } from './user-detail.component';
 import { MessageConstants } from '../../../shared/constants/message.constant';
+import { ChangeEmailComponent } from './change-email.component';
+import { SetPasswordComponent } from './set-password.component';
+import { RoleAssignComponent } from './role-assign.component';
 
 @Component({
   selector: 'app-user',
@@ -119,11 +122,59 @@ export class UserComponent implements OnInit, OnDestroy {
     });
   }
 
-  setPassword(id: string) {}
+  setPassword(id: string) {
+    const ref = this.dialogService.open(SetPasswordComponent, {
+      data: {
+        id: id,
+      },
+      header: 'Cập nhật email',
+      width: '70%',
+    });
+    ref.onClose.subscribe((result: boolean) => {
+      if (result) {
+        this.alertService.showSuccess(
+          MessageConstants.CHANGE_PASSWORD_SUCCCESS_MSG
+        );
+        this.selectedItems = [];
+        this.loadData();
+      }
+    });
+  }
 
-  changeEmail(id: string) {}
+  changeEmail(id: string) {
+    const ref = this.dialogService.open(ChangeEmailComponent, {
+      data: {
+        id: id,
+      },
+      header: 'Cập nhật email',
+      width: '70%',
+    });
+    ref.onClose.subscribe((result: boolean) => {
+      if (result) {
+        this.alertService.showSuccess(
+          MessageConstants.CHANGE_EMAIL_SUCCCESS_MSG
+        );
+        this.selectedItems = [];
+        this.loadData();
+      }
+    });
+  }
 
-  assignRole(id: string) {}
+  assignRole(id: string) {
+    const ref = this.dialogService.open(RoleAssignComponent, {
+      data: {
+        id: id,
+      },
+      header: 'Gán quyền',
+      width: '70%',
+    });
+    ref.onClose.subscribe((result: boolean) => {
+      if (result) {
+        this.alertService.showSuccess(MessageConstants.ROLE_ASSIGN_SUCCESS_MSG);
+        this.loadData();
+      }
+    });
+  }
 
   pageChanged(event: any): void {
     this.pageIndex = event.page;
