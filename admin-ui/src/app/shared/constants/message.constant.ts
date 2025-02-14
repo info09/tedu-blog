@@ -14,6 +14,7 @@ export class MessageConstants {
   public static CREATED_OK_MSG = 'Thêm mới thành công';
   public static UPDATED_OK_MSG = 'Cập nhật thành công';
   public static DELETED_OK_MSG = 'Xóa thành công';
+  public static DELETED_ERR_MSG = 'Xóa không thành công';
   public static SET_DEFAULT_OK_MSG = 'Đặt mặc định thành công';
   public static SET_IS_HOME_OK_MSG = 'Đặt hiển thị trang chủ thành công';
   public static SET_NOT_IS_HOME_OK_MSG = 'Bỏ hiển thị trang chủ thành công';

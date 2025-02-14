@@ -1,13 +1,9 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using TeduBlog.Core.Domain.Content;
 using TeduBlog.Core.Domain.Identity;
+using TeduBlog.Core.SeedWorks.Constants;
 
 namespace TeduBlog.Data
 {
@@ -32,6 +28,24 @@ namespace TeduBlog.Data
             builder.Entity<IdentityUserLogin<Guid>>().ToTable("AppUserLogins").HasKey(x => x.UserId);
             builder.Entity<IdentityUserRole<Guid>>().ToTable("AppUserRoles").HasKey(x => new { x.RoleId, x.UserId });
             builder.Entity<IdentityUserToken<Guid>>().ToTable("AppUserTokens").HasKey(x => new { x.UserId });
+        }
+
+        public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
+        {
+            var entries = ChangeTracker
+               .Entries()
+               .Where(e => e.State == EntityState.Added);
+
+            foreach (var entityEntry in entries)
+            {
+                var dateCreatedProp = entityEntry.Entity.GetType().GetProperty(SystemConsts.DateCreatedField);
+                if (entityEntry.State == EntityState.Added
+                    && dateCreatedProp != null)
+                {
+                    dateCreatedProp.SetValue(entityEntry.Entity, DateTime.Now);
+                }
+            }
+            return base.SaveChangesAsync(cancellationToken);
         }
     }
 }

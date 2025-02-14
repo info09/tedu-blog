@@ -13,9 +13,11 @@ namespace TeduBlog.Data.SeedWorks
         {
             _context = context;
             PostRepository = new PostRepository(context, mapper);
+            PostCategoryRepository = new PostCategoryRepository(context, mapper);
         }
 
         public IPostRepository PostRepository { get; private set; }
+        public IPostCategoryRepository PostCategoryRepository { get; private set; }
 
         public async Task<int> CompleteAsync()
         {
