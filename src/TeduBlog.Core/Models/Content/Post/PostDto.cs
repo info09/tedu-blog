@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using TeduBlog.Core.Domain.Content;
 
-namespace TeduBlog.Core.Models.Content
+namespace TeduBlog.Core.Models.Content.Post
 {
     public class PostDto : PostInListDto
     {
@@ -14,13 +14,12 @@ namespace TeduBlog.Core.Models.Content
         public DateTime? DateModified { get; set; }
         public bool IsPaid { get; set; }
         public double RoyaltyAmount { get; set; }
-        public PostStatus Status { get; set; }
 
         public class AutoMapperProfiles : Profile
         {
             public AutoMapperProfiles()
             {
-                CreateMap<Post, PostDto>();
+                CreateMap<Domain.Content.Post, PostDto>();
             }
         }
     }

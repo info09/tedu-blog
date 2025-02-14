@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using TeduBlog.Core.Domain.Content;
 
-namespace TeduBlog.Core.Models.Content
+namespace TeduBlog.Core.Models.Content.Post
 {
     public class PostInListDto
     {
@@ -14,11 +14,17 @@ namespace TeduBlog.Core.Models.Content
         public string? Thumbnail { get; set; }
         public int ViewCount { get; set; }
         public DateTime DateCreated { get; set; }
+        public required string CategorySlug { set; get; }
+
+        public required string CategoryName { set; get; }
+        public string AuthorUserName { set; get; }
+        public string AuthorName { set; get; }
+        public PostStatus Status { set; get; }
         public class AutoMapperProfiles : Profile
         {
             public AutoMapperProfiles()
             {
-                CreateMap<Post, PostInListDto>();
+                CreateMap<Domain.Content.Post, PostInListDto>();
             }
         }
     }

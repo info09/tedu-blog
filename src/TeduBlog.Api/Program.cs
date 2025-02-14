@@ -13,7 +13,7 @@ using TeduBlog.Api.Filters;
 using TeduBlog.Api.Services;
 using TeduBlog.Core.ConfigOptions;
 using TeduBlog.Core.Domain.Identity;
-using TeduBlog.Core.Models.Content;
+using TeduBlog.Core.Models.Content.Post;
 using TeduBlog.Core.SeedWorks;
 using TeduBlog.Data;
 using TeduBlog.Data.Repositories;

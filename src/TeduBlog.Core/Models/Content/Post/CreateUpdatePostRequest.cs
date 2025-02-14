@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using TeduBlog.Core.Domain.Content;
 
-namespace TeduBlog.Core.Models.Content
+namespace TeduBlog.Core.Models.Content.Post
 {
     public class CreateUpdatePostRequest
     {
@@ -20,7 +20,7 @@ namespace TeduBlog.Core.Models.Content
         {
             public AutoMapperProfiles()
             {
-                CreateMap<CreateUpdatePostRequest, Post>();
+                CreateMap<CreateUpdatePostRequest, Domain.Content.Post>();
             }
         }
     }

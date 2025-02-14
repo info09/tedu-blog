@@ -1,8 +1,9 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using TeduBlog.Api.Extensions;
 using TeduBlog.Core.Domain.Content;
 using TeduBlog.Core.Models;
-using TeduBlog.Core.Models.Content;
+using TeduBlog.Core.Models.Content.Post;
 using TeduBlog.Core.SeedWorks;
 
 namespace TeduBlog.Api.Controllers.AdminApi
@@ -23,7 +24,8 @@ namespace TeduBlog.Api.Controllers.AdminApi
         [HttpGet("paging")]
         public async Task<ActionResult<PagedResult<PostInListDto>>> GetPostsPaging(string? keyword, Guid? categoryId, int pageIndex = 1, int pageSize = 10)
         {
-            var result = await _unitOfWork.PostRepository.GetPostsPagingAsync(keyword, categoryId, pageIndex, pageSize);
+            var userId = User.GetUserId();
+            var result = await _unitOfWork.PostRepository.GetAllPaging(keyword, userId, categoryId, pageIndex, pageSize);
             return Ok(result);
         }
 

@@ -15,5 +15,8 @@ namespace TeduBlog.Core.Domain.Content
         [MaxLength(500)]
         public string? Note { set; get; }
         public Guid UserId { get; set; }
+
+        [MaxLength(250)]
+        public string UserName { set; get; }
     }
 }

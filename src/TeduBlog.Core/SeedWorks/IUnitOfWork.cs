@@ -6,6 +6,7 @@ namespace TeduBlog.Core.SeedWorks
     {
         IPostRepository PostRepository { get; }
         IPostCategoryRepository PostCategoryRepository { get; }
+        ISeriesRepository SeriesRepository { get; }
         Task<int> CompleteAsync();
     }
 }
