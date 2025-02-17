@@ -19,6 +19,14 @@ import { InputTextModule } from 'primeng/inputtext';
 import { TeduSharedModule } from '../../shared/modules/tedu-shared.module';
 import { PostCategoryDetailComponent } from './post-categories/post-category-detail.component';
 import { PostComponent } from './posts/post.component';
+import { PostDetailComponent } from './posts/post-detail.component';
+import { DynamicDialogModule } from 'primeng/dynamicdialog';
+import { ImageModule } from 'primeng/image';
+import { InputNumberModule } from 'primeng/inputnumber';
+import { DropdownModule } from 'primeng/dropdown';
+import { InputTextareaModule } from 'primeng/inputtextarea';
+import { EditorModule } from 'primeng/editor';
+import { AutoCompleteModule } from 'primeng/autocomplete';
 @NgModule({
   imports: [
     ContentRoutingModule,
@@ -37,9 +45,17 @@ import { PostComponent } from './posts/post.component';
     TeduSharedModule,
     ButtonModule,
     InputTextModule,
+    InputTextareaModule,
+    DropdownModule,
+    EditorModule,
+    InputNumberModule,
+    ImageModule,
+    AutoCompleteModule,
+    DynamicDialogModule,
   ],
   declarations: [
     PostComponent,
+    PostDetailComponent,
     PostCategoryComponent,
     PostCategoryDetailComponent,
   ],

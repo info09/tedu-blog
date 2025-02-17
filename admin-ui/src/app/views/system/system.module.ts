@@ -24,7 +24,7 @@ import { UserDetailComponent } from './users/user-detail.component';
 import { ChangeEmailComponent } from './users/change-email.component';
 import { SetPasswordComponent } from './users/set-password.component';
 import { RoleAssignComponent } from './users/role-assign.component';
-import { SharedPermissionDirective } from '../../shared/directives/shared-directives.module';
+import { PermissionDirective } from '../../shared/modules/permission.directive';
 
 @NgModule({
   imports: [
@@ -45,7 +45,6 @@ import { SharedPermissionDirective } from '../../shared/directives/shared-direct
     BadgeModule,
     PickListModule,
     ImageModule,
-    SharedPermissionDirective,
   ],
   declarations: [
     UserComponent,

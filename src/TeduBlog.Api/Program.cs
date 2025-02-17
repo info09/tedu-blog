@@ -99,6 +99,8 @@ namespace TeduBlog.Api
 
             // Authentication and Authorization
             builder.Services.Configure<JwtTokenSettings>(configuration.GetSection("JwtTokenSettings"));
+            builder.Services.Configure<MediaSettings>(configuration.GetSection("MediaSettings"));
+
             builder.Services.AddScoped<SignInManager<AppUser>, SignInManager<AppUser>>();
             builder.Services.AddScoped<UserManager<AppUser>, UserManager<AppUser>>();
             builder.Services.AddScoped<RoleManager<AppRole>, RoleManager<AppRole>>();
@@ -154,6 +156,8 @@ namespace TeduBlog.Api
                     c.DisplayRequestDuration();
                 });
             }
+
+            app.UseStaticFiles();
 
             app.UseCors("AllowSpecificOrigin");
 

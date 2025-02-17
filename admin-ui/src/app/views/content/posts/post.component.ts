@@ -3,6 +3,8 @@ import {
   AdminApiPostApiClient,
   AdminApiPostCategoryApiClient,
   AdminApiTestApiClient,
+  PostCategoryDto,
+  PostDto,
   PostInListDto,
   PostInListDtoPagedResult,
 } from '../../../api/admin-api.service.generated';
@@ -10,6 +12,8 @@ import { Subject, takeUntil } from 'rxjs';
 import { DialogService } from 'primeng/dynamicdialog';
 import { AlertService } from '../../../shared/services/alert.service';
 import { ConfirmationService } from 'primeng/api';
+import { PostDetailComponent } from './post-detail.component';
+import { MessageConstants } from '../../../shared/constants/message.constant';
 
 @Component({
   selector: 'app-post',
@@ -41,7 +45,24 @@ export class PostComponent implements OnInit, OnDestroy {
     this.ngUnsubscribe.complete();
   }
   ngOnInit(): void {
+    this.loadProductCategories();
     this.loadData();
+  }
+
+  loadProductCategories() {
+    this.postCategoryService
+      .getAll()
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe({
+        next: (res: PostCategoryDto[]) => {
+          res.forEach((element) => {
+            this.postCategories.push({
+              value: element.id,
+              label: element.name,
+            });
+          });
+        },
+      });
   }
   loadData() {
     this.toggleBlockUI(true);
@@ -61,9 +82,64 @@ export class PostComponent implements OnInit, OnDestroy {
         },
       });
   }
-  showAddModal() {}
-  showEditModal() {}
-  deleteItems() {}
+  showAddModal() {
+    const ref = this.dialogService.open(PostDetailComponent, {
+      header: 'Thêm mới bài viết',
+      width: '70%',
+    });
+    ref.onClose.subscribe((data: PostDto) => {
+      if (data) {
+        this.alertService.showSuccess(MessageConstants.CREATED_OK_MSG);
+        this.loadData();
+        this.selectedItems = [];
+      }
+    });
+  }
+  showEditModal() {
+    const ref = this.dialogService.open(PostDetailComponent, {
+      header: 'Cập nhật bài viết',
+      width: '70%',
+      data: {
+        id: this.selectedItems[0].id,
+      },
+    });
+    ref.onClose.subscribe((data: PostDto) => {
+      if (data) {
+        this.alertService.showSuccess(MessageConstants.CREATED_OK_MSG);
+        this.loadData();
+        this.selectedItems = [];
+      }
+    });
+  }
+  deleteItems() {
+    if (this.selectedItems.length === 0) {
+      this.alertService.showError(MessageConstants.NOT_CHOOSE_ANY_RECORD);
+      return;
+    }
+
+    var ids = this.selectedItems?.map((el) => el.id) || [];
+    this.confirmationService.confirm({
+      message: MessageConstants.CONFIRM_DELETE_MSG,
+      accept: () => {
+        this.deleteItemsConfirm(ids);
+      },
+    });
+  }
+
+  deleteItemsConfirm(ids: any[]) {
+    this.toggleBlockUI(true);
+    this.postService
+      .deletePosts(ids)
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe({
+        next: () => {
+          this.alertService.showSuccess(MessageConstants.DELETED_OK_MSG);
+          this.selectedItems = [];
+          this.loadData();
+          this.toggleBlockUI(false);
+        },
+      });
+  }
 
   addToSeries(id: string) {}
 

@@ -52,6 +52,7 @@ import {
   AdminApiPostApiClient,
   AdminApiPostCategoryApiClient,
   AdminApiRoleApiClient,
+  AdminApiSeriesApiClient,
   AdminApiTestApiClient,
   AdminApiTokenApiClient,
   AdminApiUserApiClient,
@@ -72,7 +73,7 @@ const APP_CONTAINERS = [
 import { DialogService, DynamicDialogModule } from 'primeng/dynamicdialog';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { UtilityService } from './shared/services/utility.service';
-import { SharedPermissionDirective } from './shared/directives/shared-directives.module';
+import { UploadService } from './shared/services/upload.service';
 
 @NgModule({
   declarations: [AppComponent, ...APP_CONTAINERS],
@@ -137,9 +138,11 @@ import { SharedPermissionDirective } from './shared/directives/shared-directives
     AdminApiUserApiClient,
     AdminApiPostCategoryApiClient,
     AdminApiPostApiClient,
+    AdminApiSeriesApiClient,
     DialogService,
     ConfirmationService,
     UtilityService,
+    UploadService,
   ],
   bootstrap: [AppComponent],
 })

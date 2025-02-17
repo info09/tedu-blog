@@ -16,4 +16,8 @@
     <ProjectReference Include="..\TeduBlog.Data\TeduBlog.Data.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\" />
+  </ItemGroup>
+
 </Project>

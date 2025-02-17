@@ -5,32 +5,32 @@
       <div class="col-4">
         <button
           appPermission
-          appPolicy="Permissons.Posts.Add"
+          appPolicy="Permissions.Posts.Create"
           pButton
           type="button"
           label="Thêm"
-          icon="fa fa-plus"
+          icon="pi pi-plus"
           (click)="showAddModal()"
           class="p-button-sm p-button-success ms-1"
         ></button>
         <button
           appPermission
-          appPolicy="Permissons.Posts.Delete"
+          appPolicy="Permissions.Posts.Delete"
           pButton
           type="button"
           label="Xóa"
-          icon="fa fa-trash"
+          icon="pi pi-trash"
           class="p-button-sm p-button-danger ms-1"
           *ngIf="selectedItems.length > 0"
           (click)="deleteItems()"
         ></button>
         <button
           appPermission
-          appPolicy="Permissons.Posts.Edit"
+          appPolicy="Permissions.Posts.Edit"
           pButton
           type="button"
           label="Sửa"
-          icon="fa fa-edit"
+          icon="pi pi-pencil"
           class="p-button-sm p-button-warning ms-1"
           *ngIf="selectedItems.length == 1"
           (click)="showEditModal()"
@@ -135,7 +135,7 @@
                 *ngIf="row.status != 3"
                 pButton
                 appPermission
-                appPolicy="Permissons.Posts.Approve"
+                appPolicy="Permissions.Posts.Approve"
                 pRipple
                 type="button"
                 icon="pi pi-check"
@@ -154,7 +154,7 @@
                 tooltipPosition="top"
                 (click)="sendToApprove(row.id)"
                 appPermission
-                appPolicy="Permissons.Posts.Edit"
+                appPolicy="Permissions.Posts.Edit"
                 class="p-button-rounded p-button-text p-button-danger"
               ></button>
               <button
@@ -167,7 +167,7 @@
                 tooltipPosition="top"
                 (click)="reject(row.id)"
                 appPermission
-                appPolicy="Permissons.Posts.Approve"
+                appPolicy="Permissions.Posts.Approve"
                 class="p-button-rounded p-button-text p-button-danger"
               ></button>
               <button
@@ -179,7 +179,7 @@
                 tooltipPosition="top"
                 (click)="showLogs(row.id)"
                 appPermission
-                appPolicy="Permissons.Posts.View"
+                appPolicy="Permissions.Posts.View"
                 class="p-button-rounded p-button-text p-button-info"
               ></button>
             </td>

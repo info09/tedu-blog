@@ -11,10 +11,14 @@ export class PermissionDirective implements OnInit {
     private tokenService: TokenStorageService
   ) {}
   ngOnInit(): void {
-    const loggedInUser = this.tokenService.isAuthenticated();
+    const loggedInUser = this.tokenService.getUser();
     if (loggedInUser) {
-      const policy = JSON.parse(this.tokenService.getUser()?.permissions);
-      if (policy && policy.filter((i) => i === this.appPolicy).length > 0) {
+      var listPermissions = JSON.parse(loggedInUser.permissions);
+      if (
+        listPermissions != null &&
+        listPermissions != '' &&
+        listPermissions.filter((i) => i === this.appPolicy).length > 0
+      ) {
         this.el.nativeElement.style.display = '';
       } else {
         this.el.nativeElement.style.display = 'none';

@@ -9,7 +9,7 @@
           pButton
           type="button"
           label="Thêm"
-          icon="fa fa-plus"
+          icon="pi pi-plus"
           (click)="showAddModal()"
           class="p-button-sm p-button-success ms-1"
         ></button>
@@ -19,7 +19,7 @@
           pButton
           type="button"
           label="Xóa"
-          icon="fa fa-trash"
+          icon="pi pi-trash"
           *ngIf="selectedItems.length > 0"
           (click)="deleteItems()"
           class="p-button-sm p-button-danger ms-1"
@@ -30,7 +30,7 @@
           pButton
           type="button"
           label="Sửa"
-          icon="fa fa-edit"
+          icon="pi pi-pencil"
           *ngIf="selectedItems.length == 1"
           (click)="showEditModal()"
           class="p-button-sm p-button-warning ms-1"
