@@ -32,7 +32,7 @@
           label="Sửa"
           icon="pi pi-pencil"
           class="p-button-sm p-button-warning ms-1"
-          *ngIf="selectedItems.length == 1"
+          *ngIf="selectedItems.length == 1 && selectedItems[0].status != 3"
           (click)="showEditModal()"
         ></button>
       </div>

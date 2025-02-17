@@ -14,6 +14,8 @@ import { AlertService } from '../../../shared/services/alert.service';
 import { ConfirmationService } from 'primeng/api';
 import { PostDetailComponent } from './post-detail.component';
 import { MessageConstants } from '../../../shared/constants/message.constant';
+import { PostReturnReasonComponent } from './post-return-reason.component';
+import { PostActivityLogComponent } from './post-activity-log.component';
 
 @Component({
   selector: 'app-post',
@@ -143,13 +145,69 @@ export class PostComponent implements OnInit, OnDestroy {
 
   addToSeries(id: string) {}
 
-  approve(id: string) {}
+  approve(id: string) {
+    this.toggleBlockUI(true);
+    this.postService
+      .approvePost(id)
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe({
+        next: () => {
+          this.loadData();
+          this.alertService.showSuccess(MessageConstants.UPDATED_OK_MSG);
+          this.selectedItems = [];
+          this.toggleBlockUI(false);
+        },
+      });
+  }
 
-  sendToApprove(id: string) {}
+  sendToApprove(id: string) {
+    this.toggleBlockUI(true);
+    this.postService
+      .sendToApprove(id)
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe({
+        next: () => {
+          this.loadData();
+          this.alertService.showSuccess(MessageConstants.UPDATED_OK_MSG);
+          this.selectedItems = [];
+          this.toggleBlockUI(false);
+        },
+      });
+  }
 
-  reject(id: string) {}
+  reject(id: string) {
+    const ref = this.dialogService.open(PostReturnReasonComponent, {
+      header: 'Từ chối bài viết',
+      width: '70%',
+      data: {
+        id: id,
+      },
+    });
+    ref.onClose.subscribe((data: PostDto) => {
+      if (data) {
+        this.alertService.showSuccess(MessageConstants.UPDATED_OK_MSG);
+        this.loadData();
+        this.selectedItems = [];
+      }
+    });
+  }
 
-  showLogs(id: string) {}
+  showLogs(id: string) {
+    const ref = this.dialogService.open(PostActivityLogComponent, {
+      header: 'Lịch sử bài viết',
+      width: '70%',
+      data: {
+        id: id,
+      },
+    });
+    ref.onClose.subscribe((data: PostDto) => {
+      if (data) {
+        this.alertService.showSuccess(MessageConstants.UPDATED_OK_MSG);
+        this.loadData();
+        this.selectedItems = [];
+      }
+    });
+  }
 
   pageChanged(event: any): void {
     this.pageIndex = event.page;

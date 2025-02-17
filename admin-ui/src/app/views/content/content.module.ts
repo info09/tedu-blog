@@ -27,6 +27,8 @@ import { DropdownModule } from 'primeng/dropdown';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { EditorModule } from 'primeng/editor';
 import { AutoCompleteModule } from 'primeng/autocomplete';
+import { PostReturnReasonComponent } from './posts/post-return-reason.component';
+import { PostActivityLogComponent } from './posts/post-activity-log.component';
 @NgModule({
   imports: [
     ContentRoutingModule,
@@ -56,6 +58,8 @@ import { AutoCompleteModule } from 'primeng/autocomplete';
   declarations: [
     PostComponent,
     PostDetailComponent,
+    PostReturnReasonComponent,
+    PostActivityLogComponent,
     PostCategoryComponent,
     PostCategoryDetailComponent,
   ],
