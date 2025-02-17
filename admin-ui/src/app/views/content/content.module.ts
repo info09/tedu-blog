@@ -1,9 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
-
-import { IconModule } from '@coreui/icons-angular';
-import { ChartjsModule } from '@coreui/angular-chartjs';
 import { ContentRoutingModule } from './content-routing.module';
 import { PostCategoryComponent } from './post-categories/post-category.component';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
@@ -14,7 +11,6 @@ import { BadgeModule } from 'primeng/badge';
 import { CheckboxModule } from 'primeng/checkbox';
 import { TableModule } from 'primeng/table';
 import { KeyFilterModule } from 'primeng/keyfilter';
-import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 import { TeduSharedModule } from '../../shared/modules/tedu-shared.module';
 import { PostCategoryDetailComponent } from './post-categories/post-category-detail.component';
@@ -29,6 +25,13 @@ import { EditorModule } from 'primeng/editor';
 import { AutoCompleteModule } from 'primeng/autocomplete';
 import { PostReturnReasonComponent } from './posts/post-return-reason.component';
 import { PostActivityLogComponent } from './posts/post-activity-log.component';
+import { SeriesComponent } from './series/series.component';
+import { ButtonModule } from 'primeng/button';
+import { IconModule } from '@coreui/icons-angular';
+import { ChartjsModule } from '@coreui/angular-chartjs';
+import { SeriesDetailComponent } from './series/series-detail.component';
+import { PostSeriesComponent } from './posts/post-series.component';
+import { SeriesPostComponent } from './series/series-post.component';
 @NgModule({
   imports: [
     ContentRoutingModule,
@@ -60,8 +63,12 @@ import { PostActivityLogComponent } from './posts/post-activity-log.component';
     PostDetailComponent,
     PostReturnReasonComponent,
     PostActivityLogComponent,
+    PostSeriesComponent,
     PostCategoryComponent,
     PostCategoryDetailComponent,
+    SeriesComponent,
+    SeriesDetailComponent,
+    SeriesPostComponent,
   ],
 })
 export class ContentModule {}

@@ -16,6 +16,7 @@ import { PostDetailComponent } from './post-detail.component';
 import { MessageConstants } from '../../../shared/constants/message.constant';
 import { PostReturnReasonComponent } from './post-return-reason.component';
 import { PostActivityLogComponent } from './post-activity-log.component';
+import { PostSeriesComponent } from './post-series.component';
 
 @Component({
   selector: 'app-post',
@@ -143,7 +144,22 @@ export class PostComponent implements OnInit, OnDestroy {
       });
   }
 
-  addToSeries(id: string) {}
+  addToSeries(id: string) {
+    const ref = this.dialogService.open(PostSeriesComponent, {
+      data: {
+        id: id,
+      },
+      header: 'Thêm vào series',
+      width: '70%',
+    });
+    ref.onClose.subscribe((data: PostDto) => {
+      if (data) {
+        this.alertService.showSuccess(MessageConstants.UPDATED_OK_MSG);
+        this.selectedItems = [];
+        this.loadData();
+      }
+    });
+  }
 
   approve(id: string) {
     this.toggleBlockUI(true);
