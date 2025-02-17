@@ -4,4 +4,5 @@ export interface UserModel {
   firstName: string;
   roles: string[];
   permissions: any;
+  avatar?: string;
 }

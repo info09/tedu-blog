@@ -22,6 +22,8 @@ import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { UtilityService } from '../../../shared/services/utility.service';
 import { DomSanitizer } from '@angular/platform-browser';
 import { formatDate } from '@angular/common';
+import { environment } from '../../../../environment/environment';
+import { UploadService } from '../../../shared/services/upload.service';
 @Component({
   templateUrl: 'user-detail.component.html',
 })
@@ -45,7 +47,8 @@ export class UserDetailComponent implements OnInit, OnDestroy {
     private utilService: UtilityService,
     private fb: FormBuilder,
     private cd: ChangeDetectorRef,
-    private sanitizer: DomSanitizer
+    private sanitizer: DomSanitizer,
+    private uploadService: UploadService
   ) {}
   ngOnDestroy(): void {
     if (this.ref) {
@@ -156,6 +159,9 @@ export class UserDetailComponent implements OnInit, OnDestroy {
       avatar: new FormControl(this.selectedEntity.avatar || null),
       isActive: new FormControl(this.selectedEntity.isActive || true),
     });
+    if (this.selectedEntity.avatar) {
+      this.avatarImage = environment.API_URL + this.selectedEntity.avatar;
+    }
   }
 
   setMode(mode: string) {
@@ -213,18 +219,16 @@ export class UserDetailComponent implements OnInit, OnDestroy {
   }
 
   onFileChange(event) {
-    const reader = new FileReader();
     if (event.target.files && event.target.files.length) {
-      const [file] = event.target.files;
-      reader.readAsDataURL(file);
-      reader.onload = () => {
-        this.form.patchValue({
-          avatar: file.name,
-          avatarFile: reader.result,
-        });
-
-        this.cd.markForCheck();
-      };
+      this.uploadService.uploadImage('posts', event.target.files).subscribe({
+        next: (response: any) => {
+          this.form.controls['avatar'].setValue(response.path);
+          this.avatarImage = environment.API_URL + response.path;
+        },
+        error: (err: any) => {
+          console.log(err);
+        },
+      });
     }
   }
 

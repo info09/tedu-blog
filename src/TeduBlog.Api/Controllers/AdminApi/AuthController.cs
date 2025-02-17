@@ -55,7 +55,8 @@ namespace TeduBlog.Api.Controllers.AdminApi
                     new Claim(UserClaims.FirstName, user.FirstName),
                     new Claim(UserClaims.Roles, string.Join(";", roles)),
                     new Claim(UserClaims.Permissions, JsonSerializer.Serialize(permissions)),
-                    new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
+                    new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+                    new Claim(UserClaims.Avatar, !string.IsNullOrEmpty(user?.Avatar) ? user.Avatar : "")
             };
 
             var accessToken = _tokenService.GenerateAccessToken(claims);
