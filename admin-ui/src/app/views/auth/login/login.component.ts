@@ -1,4 +1,4 @@
-import { Component, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import {
   FormBuilder,
   FormControl,
@@ -15,13 +15,14 @@ import { Router } from '@angular/router';
 import { TokenStorageService } from '../../../shared/services/token-storage.service';
 import { UrlConstants } from '../../../shared/constants/url.constant';
 import { Subject, takeUntil } from 'rxjs';
+import { BroadcastService } from '../../../shared/services/broadcast.service';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
 })
-export class LoginComponent implements OnDestroy {
+export class LoginComponent implements OnInit, OnDestroy {
   loginForm: FormGroup;
   private ngUnsubscribe = new Subject<void>();
   loading = false;
@@ -30,11 +31,17 @@ export class LoginComponent implements OnDestroy {
     private authApiClient: AdminApiAuthApiClient,
     private alertService: AlertService,
     private router: Router,
-    private tokenStorage: TokenStorageService
+    private tokenStorage: TokenStorageService,
+    private broadcastService: BroadcastService
   ) {
     this.loginForm = this.fb.group({
       userName: new FormControl('', Validators.required),
       password: new FormControl('', Validators.required),
+    });
+  }
+  ngOnInit(): void {
+    this.broadcastService.httpError.asObservable().subscribe((value) => {
+      this.loading = false;
     });
   }
   ngOnDestroy(): void {
@@ -60,10 +67,6 @@ export class LoginComponent implements OnDestroy {
           this.router.navigate([UrlConstants.HOME]);
         },
         error: (error: any) => {
-          console.log(
-            '🚀 ~ LoginComponent ~ this.authApiClient.login ~ error:',
-            error
-          );
           this.alertService.showError('Login Invalid');
           this.loading = false;
         },

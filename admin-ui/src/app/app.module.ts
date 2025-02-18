@@ -72,6 +72,7 @@ import {
   BadgeModule,
 } from '@coreui/angular';
 import { CardModule } from 'primeng/card';
+import { BroadcastService } from './shared/services/broadcast.service';
 
 @NgModule({
   declarations: [AppComponent, ...APP_CONTAINERS],
@@ -142,6 +143,7 @@ import { CardModule } from 'primeng/card';
     ConfirmationService,
     UtilityService,
     UploadService,
+    BroadcastService,
   ],
   bootstrap: [AppComponent],
 })

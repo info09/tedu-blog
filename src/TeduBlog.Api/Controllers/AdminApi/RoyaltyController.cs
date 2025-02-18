@@ -39,7 +39,7 @@ namespace TeduBlog.Api.Controllers.AdminApi
         public async Task<IActionResult> PayRoyalty(Guid userId)
         {
             var fromUserId = User.GetUserId();
-            await _royaltyService.PayRoyaltyForUserAsync(userId, fromUserId);
+            await _royaltyService.PayRoyaltyForUserAsync(fromUserId, userId);
             return Ok();
         }
 

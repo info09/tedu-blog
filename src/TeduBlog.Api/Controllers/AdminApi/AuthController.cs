@@ -39,10 +39,10 @@ namespace TeduBlog.Api.Controllers.AdminApi
             if (request == null) return BadRequest("Invalid request");
 
             var user = await _userManager.Users.FirstOrDefaultAsync(i => i.UserName == request.UserName);
-            if (user == null || user.IsActive == false || user.LockoutEnabled) return BadRequest("Đăng nhập không đúng");
+            if (user == null || user.IsActive == false || user.LockoutEnabled) return Unauthorized("Đăng nhập không đúng");
 
             var result = await _signInManager.PasswordSignInAsync(user, request.Password, false, true);
-            if (!result.Succeeded) return BadRequest("Đăng nhập không đúng");
+            if (!result.Succeeded) return Unauthorized("Đăng nhập không đúng");
 
             var roles = await _userManager.GetRolesAsync(user);
             var permissions = await this.GetPermissionsByUserIdAsync(user.Id.ToString());
