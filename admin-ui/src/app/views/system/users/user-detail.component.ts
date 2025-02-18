@@ -100,6 +100,9 @@ export class UserDetailComponent implements OnInit, OnDestroy {
       },
     ],
     phoneNumber: [{ type: 'required', message: 'Bạn phải nhập số điện thoại' }],
+    royaltyAmountPerPost: [
+      { type: 'required', message: 'Bạn phải nhập nhuận bút' },
+    ],
   };
 
   loadFormDetail(id: string) {

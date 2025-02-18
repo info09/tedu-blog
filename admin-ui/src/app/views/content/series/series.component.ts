@@ -109,10 +109,41 @@ export class SeriesComponent implements OnInit, OnDestroy {
     });
   }
 
-  deleteItems() {}
+  deleteItems() {
+    if (this.selectedItems.length == 0) {
+      this.alertService.showError(MessageConstants.NOT_CHOOSE_ANY_RECORD);
+      return;
+    }
+    var ids = this.selectedItems?.map((el) => el.id) || [];
+    this.confirmationService.confirm({
+      message: MessageConstants.CONFIRM_DELETE_MSG,
+      accept: () => {
+        this.deleteItemsConfirm(ids);
+      },
+    });
+  }
+
+  deleteItemsConfirm(ids: any[]) {
+    this.toggleBlockUI(true);
+    this.seriesService
+      .deleteSeries(ids)
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe({
+        next: () => {
+          this.alertService.showSuccess(MessageConstants.DELETED_OK_MSG);
+          this.loadData();
+          this.selectedItems = [];
+          this.toggleBlockUI(false);
+        },
+        error: () => {
+          this.alertService.showError(MessageConstants.DELETED_ERR_MSG);
+          this.toggleBlockUI(false);
+        },
+      });
+  }
 
   pageChanged(event: any): void {
-    this.pageIndex = event.page;
+    this.pageIndex = event.page + 1;
     this.pageSize = event.rows;
     this.loadData();
   }
