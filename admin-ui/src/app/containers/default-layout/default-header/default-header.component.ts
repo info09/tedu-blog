@@ -17,7 +17,7 @@ export class DefaultHeaderComponent extends HeaderComponent implements OnInit {
   public newMessages = new Array(4);
   public newTasks = new Array(5);
   public newNotifications = new Array(5);
-  public avatar?: string = '';
+  public avatarImage: string = '';
 
   constructor(
     private classToggler: ClassToggleService,
@@ -27,7 +27,8 @@ export class DefaultHeaderComponent extends HeaderComponent implements OnInit {
     super();
   }
   ngOnInit(): void {
-    this.avatar = environment.API_URL + this.tokenStorage.getUser()?.avatar;
+    this.avatarImage =
+      environment.API_URL + this.tokenStorage.getUser()?.avatar;
   }
 
   logout() {

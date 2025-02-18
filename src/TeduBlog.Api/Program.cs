@@ -15,9 +15,11 @@ using TeduBlog.Core.ConfigOptions;
 using TeduBlog.Core.Domain.Identity;
 using TeduBlog.Core.Models.Content.Post;
 using TeduBlog.Core.SeedWorks;
+using TeduBlog.Core.Services;
 using TeduBlog.Data;
 using TeduBlog.Data.Repositories;
 using TeduBlog.Data.SeedWorks;
+using TeduBlog.Data.Services;
 
 namespace TeduBlog.Api
 {
@@ -105,6 +107,7 @@ namespace TeduBlog.Api
             builder.Services.AddScoped<UserManager<AppUser>, UserManager<AppUser>>();
             builder.Services.AddScoped<RoleManager<AppRole>, RoleManager<AppRole>>();
             builder.Services.AddScoped<ITokenService, TokenService>();
+            builder.Services.AddScoped<IRoyaltyService, RoyaltyService>();
 
             //Default config for ASP.NET Core
 

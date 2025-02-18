@@ -20,6 +20,9 @@ namespace TeduBlog.Core.Models.Content.Post
         public string AuthorUserName { set; get; }
         public string AuthorName { set; get; }
         public PostStatus Status { set; get; }
+        public bool IsPaid { get; set; }
+        public double RoyaltyAmount { get; set; }
+        public DateTime? PaidDate { get; set; }
         public class AutoMapperProfiles : Profile
         {
             public AutoMapperProfiles()
