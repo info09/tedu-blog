@@ -126,12 +126,16 @@ namespace TeduBlog.Api.Controllers.AdminApi
         {
             foreach (var id in ids)
             {
-                var post = await _unitOfWork.SeriesRepository.GetByIdAsync(id);
-                if (post == null)
+                var series = await _unitOfWork.SeriesRepository.GetByIdAsync(id);
+                if (series == null)
                 {
                     return NotFound();
                 }
-                _unitOfWork.SeriesRepository.Remove(post);
+                if (await _unitOfWork.SeriesRepository.HasPost(id))
+                {
+                    return BadRequest("Series đang chứa bài viết, không thể xóa");
+                }
+                _unitOfWork.SeriesRepository.Remove(series);
             }
             var result = await _unitOfWork.CompleteAsync();
             return result > 0 ? Ok() : BadRequest();

@@ -8,6 +8,7 @@ namespace TeduBlog.Core.SeedWorks
         IPostCategoryRepository PostCategoryRepository { get; }
         ISeriesRepository SeriesRepository { get; }
         ITransactionRepository TransactionRepository { get; }
+        IUserRepository UserRepository { get; }
         Task<int> CompleteAsync();
     }
 }

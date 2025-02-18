@@ -8,6 +8,7 @@ using TeduBlog.Api.Filters;
 using TeduBlog.Core.Domain.Identity;
 using TeduBlog.Core.Models;
 using TeduBlog.Core.Models.System.User;
+using TeduBlog.Core.SeedWorks;
 using TeduBlog.Core.SeedWorks.Constants;
 
 namespace TeduBlog.Api.Controllers.AdminApi
@@ -18,11 +19,13 @@ namespace TeduBlog.Api.Controllers.AdminApi
     {
         private readonly UserManager<AppUser> _userManager;
         private readonly IMapper _mapper;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public UserController(UserManager<AppUser> userManager, IMapper mapper)
+        public UserController(UserManager<AppUser> userManager, IMapper mapper, IUnitOfWork unitOfWork)
         {
             _userManager = userManager;
             _mapper = mapper;
+            _unitOfWork = unitOfWork;
         }
 
         [HttpGet("{id}")]
@@ -64,7 +67,7 @@ namespace TeduBlog.Api.Controllers.AdminApi
         [HttpPost]
         [ValidateModel]
         [Authorize(Permissions.Users.Create)]
-        public async Task<IActionResult> CreateUser([FromBody]CreateUserRequest request)
+        public async Task<IActionResult> CreateUser([FromBody] CreateUserRequest request)
         {
             if (await _userManager.FindByNameAsync(request.UserName) != null)
                 return BadRequest();
@@ -83,7 +86,7 @@ namespace TeduBlog.Api.Controllers.AdminApi
 
         [HttpPut("{id}")]
         [Authorize(Permissions.Users.Edit)]
-        public async Task<IActionResult> UpdateUser(Guid id, [FromBody]UpdateUserRequest request)
+        public async Task<IActionResult> UpdateUser(Guid id, [FromBody] UpdateUserRequest request)
         {
             var user = await _userManager.FindByIdAsync(id.ToString());
             if (user == null)
@@ -175,15 +178,13 @@ namespace TeduBlog.Api.Controllers.AdminApi
                 return NotFound();
             }
             var currentRoles = await _userManager.GetRolesAsync(user);
-            var removedResult = await _userManager.RemoveFromRolesAsync(user, currentRoles);
+            await _unitOfWork.UserRepository.RemoveUserFromRoles(user.Id, currentRoles.ToArray());
             var addedResult = await _userManager.AddToRolesAsync(user, roles);
-            if (!addedResult.Succeeded || !removedResult.Succeeded)
+            if (!addedResult.Succeeded)
             {
                 List<IdentityError> addedErrorList = addedResult.Errors.ToList();
-                List<IdentityError> removedErrorList = removedResult.Errors.ToList();
                 var errorList = new List<IdentityError>();
                 errorList.AddRange(addedErrorList);
-                errorList.AddRange(removedErrorList);
                 return BadRequest(string.Join("<br/>", errorList.Select(x => x.Description)));
             }
             return Ok();
