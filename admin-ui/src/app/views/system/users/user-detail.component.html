@@ -146,7 +146,15 @@
         >
         </p-image>
       </div>
-      <div class="field col-6 md:col-6"></div>
+      <div class="field col-6 md:col-6">
+        <label for="royaltyAmountPerPost">Nhuận bút/bài</label>
+        <p-inputNumber
+          id="royaltyAmountPerPost"
+          formControlName="royaltyAmountPerPost"
+          [style]="{ width: '100%' }"
+        >
+        </p-inputNumber>
+      </div>
       <div class="field-checkbox col-12 md:col-3">
         <p-checkbox
           formControlName="isActive"
