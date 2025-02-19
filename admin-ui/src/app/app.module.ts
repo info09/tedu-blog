@@ -116,11 +116,6 @@ import { BroadcastService } from './shared/services/broadcast.service';
       multi: true,
     },
     {
-      provide: HTTP_INTERCEPTORS,
-      useClass: GlobalHttpInterceptorService,
-      multi: true,
-    },
-    {
       provide: LocationStrategy,
       useClass: HashLocationStrategy,
     },
