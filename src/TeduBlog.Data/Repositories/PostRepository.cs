@@ -146,5 +146,11 @@ namespace TeduBlog.Data.Repositories
         {
             return await _context.Posts.Where(i => i.AuthorUserId == userId && i.IsPaid == false && i.Status == PostStatus.Published).ToListAsync();
         }
+
+        public async Task<List<PostInListDto>> GetLatestPublishPost(int top)
+        {
+            var query = _context.Posts.Where(i => i.Status == PostStatus.Published).OrderByDescending(i => i.DateCreated).Take(top);
+            return await _mapper.ProjectTo<PostInListDto>(query).ToListAsync();
+        }
     }
 }
