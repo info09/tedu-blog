@@ -152,5 +152,20 @@ namespace TeduBlog.Data.Repositories
             var query = _context.Posts.Where(i => i.Status == PostStatus.Published).OrderByDescending(i => i.DateCreated).Take(top);
             return await _mapper.ProjectTo<PostInListDto>(query).ToListAsync();
         }
+
+        public async Task<PagedResult<PostInListDto>> GetPostByCategoryPaging(string? categorySlug, int pageIndex = 1, int pageSize = 10)
+        {
+            var query = _context.Posts.AsQueryable();
+            query = !string.IsNullOrEmpty(categorySlug) ? query.Where(i => i.CategorySlug == categorySlug) : query;
+            var totalRow = await query.CountAsync();
+            query = query.OrderByDescending(i => i.DateCreated).Skip((pageIndex - 1) * pageSize).Take(pageSize);
+            return new PagedResult<PostInListDto>
+            {
+                Items = await _mapper.ProjectTo<PostInListDto>(query).ToListAsync(),
+                RowCount = totalRow,
+                CurrentPage = pageIndex,
+                PageSize = pageSize
+            };
+        }
     }
 }
