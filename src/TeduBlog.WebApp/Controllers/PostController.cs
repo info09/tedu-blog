@@ -33,5 +33,21 @@ namespace TeduBlog.WebApp.Controllers
                 Category = category
             });
         }
+
+        [Route("post/{slug}")]
+        public async Task<IActionResult> Details([FromRoute] string slug)
+        {
+            var post = await _unitOfWork.PostRepository.GetBySlug(slug);
+            if (post == null)
+            {
+                return NotFound();
+            }
+            var category = await _unitOfWork.PostCategoryRepository.GetBySlug(post.CategorySlug);
+            return View(new PostDetailViewModel()
+            {
+                Post = post,
+                Category = category
+            });
+        }
     }
 }

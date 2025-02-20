@@ -167,5 +167,11 @@ namespace TeduBlog.Data.Repositories
                 PageSize = pageSize
             };
         }
+
+        public async Task<PostDto> GetBySlug(string slug)
+        {
+            var post = await _context.Posts.FirstOrDefaultAsync(i => i.Slug == slug) ?? throw new Exception($"Cannot find post with slug = {slug}");
+            return _mapper.Map<PostDto>(post);
+        }
     }
 }
