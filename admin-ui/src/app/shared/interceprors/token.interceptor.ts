@@ -1,23 +1,16 @@
-import { UrlConstants } from './../constants/url.constant';
 import { Injectable } from '@angular/core';
 import {
   HttpRequest,
   HttpHandler,
-  HttpEvent,
   HttpInterceptor,
-  HttpErrorResponse,
 } from '@angular/common/http';
 import {
-  BehaviorSubject,
   catchError,
-  filter,
   Observable,
-  Subject,
   switchMap,
-  take,
-  takeUntil,
-  tap,
   throwError,
+  tap,
+  Subject,
 } from 'rxjs';
 import { TokenStorageService } from '../services/token-storage.service';
 import {
@@ -28,7 +21,6 @@ import {
 import { Router } from '@angular/router';
 import { AlertService } from '../services/alert.service';
 import { BroadcastService } from '../services/broadcast.service';
-const TOKEN_HEADER_KEY = 'Authorization'; // for Spring Boot back-end
 
 @Injectable()
 export class TokenInterceptor implements HttpInterceptor {
@@ -41,7 +33,7 @@ export class TokenInterceptor implements HttpInterceptor {
     private tokenService: TokenStorageService,
     private tokenApiClient: AdminApiTokenApiClient,
     private alertService: AlertService,
-    private broadcastService: BroadcastService
+    private boardCastService: BroadcastService
   ) {}
 
   addAuthHeader(request) {
@@ -49,10 +41,11 @@ export class TokenInterceptor implements HttpInterceptor {
     if (authHeader) {
       return request.clone({
         setHeaders: {
-          Authorization: `Bearer ${authHeader}`,
+          Authorization: `Bearer ` + authHeader,
         },
       });
     }
+    return request;
   }
 
   refreshToken(): Observable<any> {
@@ -72,16 +65,16 @@ export class TokenInterceptor implements HttpInterceptor {
         refreshToken: refreshToken!,
       });
       return this.tokenApiClient.refresh(tokenRequest).pipe(
-        tap((res: AuthenticatedResult) => {
+        tap((response: AuthenticatedResult) => {
           this.refreshTokenInProgress = false;
-          this.tokenService.saveToken(res.token!);
-          this.tokenService.saveRefreshToken(res.refreshToken!);
-          this.tokenRefreshedSource.next(res.token);
+          this.tokenService.saveToken(response.token!);
+          this.tokenService.saveRefreshToken(response.refreshToken!);
+          this.tokenRefreshedSource.next(response.token);
         }),
-        catchError((error) => {
+        catchError((err) => {
           this.refreshTokenInProgress = false;
           this.logout();
-          return throwError(() => new Error(error));
+          return throwError(err);
         })
       );
     }
@@ -89,15 +82,19 @@ export class TokenInterceptor implements HttpInterceptor {
 
   logout() {
     this.tokenService.signOut();
-    this.router.navigate([UrlConstants.LOGIN]);
+    this.router.navigate(['login']);
   }
 
   async handleResponseError(error, request?, next?) {
+    // Business error
     if (error.status === 400) {
       const errMessage = await new Response(error.error).text();
       this.alertService.showError(errMessage);
-      this.broadcastService.httpError.next(true);
-    } else if (error.status === 401) {
+      this.boardCastService.httpError.next(true);
+    }
+
+    // Invalid token error
+    else if (error.status === 401) {
       return this.refreshToken().pipe(
         switchMap(() => {
           request = this.addAuthHeader(request);
@@ -111,16 +108,23 @@ export class TokenInterceptor implements HttpInterceptor {
           }
         })
       );
-    } else if (error.status === 403) {
+    }
+
+    // Access denied error
+    else if (error.status === 403) {
+      // Logout
       this.logout();
-      this.broadcastService.httpError.next(true);
-    } else if (error.status === 500) {
+      this.boardCastService.httpError.next(true);
+    }
+    // Maintenance error
+    else if (error.status === 500) {
       this.alertService.showError(
         'Hệ thống có lỗi xảy ra. Vui lòng liên hệ admin'
       );
-      this.broadcastService.httpError.next(true);
+      this.boardCastService.httpError.next(true);
     }
-    return throwError(() => new Error(error));
+
+    return throwError(error);
   }
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<any> {

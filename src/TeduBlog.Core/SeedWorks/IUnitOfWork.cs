@@ -9,6 +9,7 @@ namespace TeduBlog.Core.SeedWorks
         ISeriesRepository SeriesRepository { get; }
         ITransactionRepository TransactionRepository { get; }
         IUserRepository UserRepository { get; }
+        ITagRepository TagRepository { get; }
         Task<int> CompleteAsync();
     }
 }

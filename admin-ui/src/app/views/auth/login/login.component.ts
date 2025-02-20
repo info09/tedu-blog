@@ -66,7 +66,7 @@ export class LoginComponent implements OnInit, OnDestroy {
           this.tokenStorage.saveUser(res);
           this.router.navigate([UrlConstants.HOME]);
         },
-        error: (error: any) => {
+        error: (error: Error) => {
           this.alertService.showError('Login Invalid');
           this.loading = false;
         },

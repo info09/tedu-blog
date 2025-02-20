@@ -17,6 +17,10 @@ import { UtilityService } from '../../../shared/services/utility.service';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { environment } from '../../../../environment/environment';
 
+interface AutoCompleteCompleteEvent {
+  originalEvent: Event;
+  query: string;
+}
 @Component({
   templateUrl: 'post-detail.component.html',
 })
@@ -33,6 +37,11 @@ export class PostDetailComponent implements OnInit, OnDestroy {
   public series: any[] = [];
   selectedEntity = {} as PostDto;
   public thumbnailImage;
+
+  tags: string[] | undefined = [];
+  filteredTags: string[] | undefined = [];
+  postTags: string[] = [];
+
   formSavedEventEmitter: EventEmitter<any> = new EventEmitter();
 
   constructor(
@@ -57,14 +66,17 @@ export class PostDetailComponent implements OnInit, OnDestroy {
     this.buildForm();
     //Load data to form
     var categories = this.postCategoryService.getAll();
+    var tags = this.postService.getAllTags();
     this.toggleBlockUI(true);
     forkJoin({
       categories,
+      tags,
     })
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe({
         next: (response: any) => {
           //Push categories to dropdown list
+          this.tags = response.tags as string[];
           var categories = response.categories as PostCategoryDto[];
           categories.forEach((element) => {
             this.postCategories.push({
@@ -73,7 +85,15 @@ export class PostDetailComponent implements OnInit, OnDestroy {
             });
           });
           if (this.utilService.isEmpty(this.config.data?.id) == false) {
-            this.loadFormDetail(this.config.data?.id);
+            this.postService
+              .getPostTags(this.config?.data?.id)
+              .pipe(takeUntil(this.ngUnsubscribe))
+              .subscribe({
+                next: (res: string[]) => {
+                  this.postTags = res;
+                  this.loadFormDetail(this.config.data?.id);
+                },
+              });
           } else {
             this.toggleBlockUI(false);
           }
@@ -185,13 +205,29 @@ export class PostDetailComponent implements OnInit, OnDestroy {
       seoDescription: new FormControl(
         this.selectedEntity.seoDescription || null
       ),
-      tags: new FormControl(this.selectedEntity.tags || null),
       content: new FormControl(this.selectedEntity.content || null),
       thumbnail: new FormControl(this.selectedEntity.thumbnail || null),
+      tags: new FormControl(this.postTags),
     });
     if (this.selectedEntity.thumbnail) {
       this.thumbnailImage = environment.API_URL + this.selectedEntity.thumbnail;
     }
+  }
+
+  filterTag(event: AutoCompleteCompleteEvent) {
+    let filtered: string[] = [];
+    let query = event.query;
+
+    for (let i = 0; i < (this.tags as string[]).length; i++) {
+      let tag = (this.tags as string[])[i];
+      if (tag.toLowerCase().indexOf(query.toLowerCase()) == 0) {
+        filtered.push(tag);
+      }
+    }
+    if (filtered.length == 0) {
+      filtered.push(query);
+    }
+    this.filteredTags = filtered;
   }
 
   private toggleBlockUI(enabled: boolean) {

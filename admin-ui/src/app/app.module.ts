@@ -43,7 +43,6 @@ import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { TokenStorageService } from './shared/services/token-storage.service';
 import { AuthGuard } from './shared/auth.guard';
 import { TokenInterceptor } from './shared/interceprors/token.interceptor';
-import { GlobalHttpInterceptorService } from './shared/interceprors/error-handler.interceptor';
 const APP_CONTAINERS = [
   DefaultFooterComponent,
   DefaultHeaderComponent,

@@ -19,6 +19,7 @@ namespace TeduBlog.Data.SeedWorks
             SeriesRepository = new SeriesRepository(context, mapper);
             TransactionRepository = new TransactionRepository(context, mapper);
             UserRepository = new UserRepository(context);
+            TagRepository = new TagRepository(context, mapper);
         }
 
         public IPostRepository PostRepository { get; private set; }
@@ -29,6 +30,8 @@ namespace TeduBlog.Data.SeedWorks
         public ITransactionRepository TransactionRepository { get; private set; }
 
         public IUserRepository UserRepository { get; private set; }
+
+        public ITagRepository TagRepository { get; private set; }
 
         public async Task<int> CompleteAsync()
         {

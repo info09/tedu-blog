@@ -173,5 +173,63 @@ namespace TeduBlog.Data.Repositories
             var post = await _context.Posts.FirstOrDefaultAsync(i => i.Slug == slug) ?? throw new Exception($"Cannot find post with slug = {slug}");
             return _mapper.Map<PostDto>(post);
         }
+
+        public async Task<List<string>> GetAllTags()
+        {
+            var query = _context.Tags.Select(i => i.Name);
+            return await query.ToListAsync();
+        }
+
+        public async Task AddTagToPost(Guid postId, Guid tagId)
+        {
+            await _context.PostTags.AddAsync(new PostTag
+            {
+                PostId = postId,
+                TagId = tagId
+            });
+        }
+
+        public async Task<List<string>> GetTagByPostId(Guid postId)
+        {
+            var query = from p in _context.Posts
+                        join pt in _context.PostTags on p.Id equals pt.PostId
+                        join t in _context.Tags on pt.TagId equals t.Id
+                        where p.Id == postId
+                        select t.Name;
+            return await query.ToListAsync();
+        }
+
+        public Task<List<TagDto>> GetTagObjectsByPostId(Guid postId)
+        {
+            var query = from p in _context.Posts
+                        join pt in _context.PostTags on p.Id equals pt.PostId
+                        join t in _context.Tags on pt.TagId equals t.Id
+                        where p.Id == postId
+                        select new TagDto
+                        {
+                            Id = t.Id,
+                            Name = t.Name,
+                            Slug = t.Slug
+                        };
+            return query.ToListAsync();
+        }
+
+        public async Task<PagedResult<PostInListDto>> GetPostByTagPaging(string tagSlug, int pageIndex = 1, int pageSize = 10)
+        {
+            var query = from p in _context.Posts
+                        join pt in _context.PostTags on p.Id equals pt.PostId
+                        join t in _context.Tags on pt.TagId equals t.Id
+                        where t.Slug == tagSlug
+                        select p;
+            var totalRow = await query.CountAsync();
+            query = query.OrderByDescending(i => i.DateCreated).Skip((pageIndex - 1) * pageSize).Take(pageSize);
+            return new PagedResult<PostInListDto>
+            {
+                Items = await _mapper.ProjectTo<PostInListDto>(query).ToListAsync(),
+                RowCount = totalRow,
+                CurrentPage = pageIndex,
+                PageSize = pageSize
+            };
+        }
     }
 }

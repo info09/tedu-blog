@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using TeduBlog.Api.Extensions;
 using TeduBlog.Core.Domain.Content;
 using TeduBlog.Core.Domain.Identity;
+using TeduBlog.Core.Helpers;
 using TeduBlog.Core.Models;
 using TeduBlog.Core.Models.Content.Post;
 using TeduBlog.Core.SeedWorks;
@@ -55,7 +56,9 @@ namespace TeduBlog.Api.Controllers.AdminApi
             if (await _unitOfWork.PostRepository.IsSlugAlreadyExisted(request.Slug))
                 return BadRequest("Đã tồn tại Slug");
             var post = _mapper.Map<CreateUpdatePostRequest, Post>(request);
+            var postId = Guid.NewGuid();
             var category = await _unitOfWork.PostCategoryRepository.GetByIdAsync(request.CategoryId);
+            post.Id = postId;
             post.CategoryName = category!.Name;
             post.CategorySlug = category!.Slug;
 
@@ -64,6 +67,27 @@ namespace TeduBlog.Api.Controllers.AdminApi
             post.AuthorUserId = userId;
             post.AuthorName = user!.GetFullName();
             post.AuthorUserName = user.UserName!;
+
+            // Process tag
+            if (request.Tags != null && request.Tags.Any())
+            {
+                foreach (var tagName in request.Tags)
+                {
+                    var tagSlug = TextHelper.ToUnsignedString(tagName);
+                    var tag = await _unitOfWork.TagRepository.GetBySlug(tagSlug);
+                    Guid tagId;
+                    if (tag == null)
+                    {
+                        tagId = Guid.NewGuid();
+                        _unitOfWork.TagRepository.Add(new Tag() { Id = tagId, Name = tagName, Slug = tagSlug});
+                    }
+                    else
+                    {
+                        tagId = tag.Id;
+                    }
+                    await _unitOfWork.PostRepository.AddTagToPost(postId, tagId);
+                }
+            }
 
             _unitOfWork.PostRepository.Add(post);
 
@@ -90,6 +114,28 @@ namespace TeduBlog.Api.Controllers.AdminApi
             }
 
             _mapper.Map(request, post);
+
+            // Process tag
+            if (request.Tags != null && request.Tags.Any())
+            {
+                foreach (var tagName in request.Tags)
+                {
+                    var tagSlug = TextHelper.ToUnsignedString(tagName);
+                    var tag = await _unitOfWork.TagRepository.GetBySlug(tagSlug);
+                    Guid tagId;
+                    if (tag == null)
+                    {
+                        tagId = Guid.NewGuid();
+                        _unitOfWork.TagRepository.Add(new Tag() { Id = tagId, Name = tagName, Slug = tagSlug });
+                    }
+                    else
+                    {
+                        tagId = tag.Id;
+                    }
+                    await _unitOfWork.PostRepository.AddTagToPost(post.Id, tagId);
+                }
+            }
+
             var result = await _unitOfWork.CompleteAsync();
             return result > 0 ? Ok() : BadRequest();
         }
@@ -158,6 +204,22 @@ namespace TeduBlog.Api.Controllers.AdminApi
         {
             var logs = await _unitOfWork.PostRepository.GetActivityLogs(id);
             return Ok(logs);
+        }
+
+        [HttpGet("tags")]
+        [Authorize(Posts.View)]
+        public async Task<ActionResult<List<string>>> GetAllTags()
+        {
+            var tags = await _unitOfWork.PostRepository.GetAllTags();
+            return Ok(tags);
+        }
+
+        [HttpGet("tags/{postId}")]
+        [Authorize(Posts.View)]
+        public async Task<ActionResult<List<string>>> GetPostTags(Guid postId)
+        {
+            var tags = await _unitOfWork.PostRepository.GetTagByPostId(postId);
+            return Ok(tags);
         }
     }
 }

@@ -114,14 +114,12 @@
       </div>
       <div class="field col-12 md:col-12">
         <label for="tags">Tags</label>
-        <input
-          id="tags"
-          type="text"
-          pInputText
-          [pKeyFilter]="noSpecial"
+        <p-autoComplete
           formControlName="tags"
-          [style]="{ width: '100%' }"
-        />
+          [suggestions]="filteredTags"
+          (completeMethod)="filterTag($event)"
+          [multiple]="true"
+        ></p-autoComplete>
       </div>
     </div>
     <ng-template pTemplate="footer">

@@ -43,10 +43,28 @@ namespace TeduBlog.WebApp.Controllers
                 return NotFound();
             }
             var category = await _unitOfWork.PostCategoryRepository.GetBySlug(post.CategorySlug);
+            var tags = await _unitOfWork.PostRepository.GetTagObjectsByPostId(post.Id);
             return View(new PostDetailViewModel()
             {
                 Post = post,
-                Category = category
+                Category = category,
+                Tags = tags
+            });
+        }
+
+        [Route("tag/{slug}")]
+        public async Task<IActionResult> ListByTag([FromRoute] string slug, [FromQuery] int page = 1)
+        {
+            var tag = await _unitOfWork.TagRepository.GetBySlug(slug);
+            if (tag == null)
+            {
+                return NotFound();
+            }
+            var posts = await _unitOfWork.PostRepository.GetPostByTagPaging(slug, page, 2);
+            return View(new PostListByTagViewModel()
+            {
+                Posts = posts,
+                Tag = tag
             });
         }
     }

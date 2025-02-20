@@ -26,6 +26,12 @@
         <div class="row gx-4 gx-lg-5 justify-content-center">
             <div class="col-md-10 col-lg-8 col-xl-7">
                 @Html.Raw(Model.Post.Content)
+                <p>
+                    @foreach (var item in Model.Tags)
+                    {
+                        <a title="@item.Name" href="@string.Format(UrlConstant.PostsByTagSlug, item.Slug)">@item.Name</a>
+                    }
+                </p>
             </div>
         </div>
     </div>
