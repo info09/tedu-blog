@@ -5,6 +5,12 @@ services:
   sqlserver:
     image: mcr.microsoft.com/mssql/server:2019-latest
 
+  tedu.api:
+    image: ${DOCKER_REGISTRY-}tedu-api:${PLATFORM:-linux}-${TAG:-latest}
+    build:
+     context: .
+     dockerfile: src/TeduBlog.Api/Dockerfile
+
 #network section
 networks:
   default:

@@ -1,13 +1,14 @@
 ﻿using AutoMapper;
+
 using TeduBlog.Core.Domain.Identity;
 
 namespace TeduBlog.Core.Models.System.User
 {
     public class UpdateUserRequest
     {
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
-        public string PhoneNumber { get; set; }
+        public string FirstName { get; set; } = default!;
+        public string LastName { get; set; } = default!;
+        public string PhoneNumber { get; set; } = default!;
         public DateTime? Dob { get; set; }
         public string? Avatar { get; set; }
         public bool IsActive { get; set; }

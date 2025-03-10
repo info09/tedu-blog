@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Identity;
+
 using System.ComponentModel;
 using System.Reflection;
 using System.Security.Claims;
+
 using TeduBlog.Core.Domain.Identity;
 using TeduBlog.Core.Models.System.Role;
 
@@ -15,14 +17,14 @@ namespace TeduBlog.Api.Extensions
             foreach (FieldInfo fi in fields)
             {
                 var attribute = fi.GetCustomAttributes(typeof(DescriptionAttribute), true);
-                string displayName = fi.GetValue(null).ToString();
+                string displayName = fi.GetValue(null)!.ToString()!;
                 var attributes = fi.GetCustomAttributes(typeof(DescriptionAttribute), true);
                 if (attributes.Length > 0)
                 {
                     var description = (DescriptionAttribute)attribute[0];
                     displayName = description.Description;
                 }
-                allPermissions.Add(new RoleClaimsDto { Value = fi.GetValue(null).ToString(), Type = "Permissions", DisplayName = displayName });
+                allPermissions.Add(new RoleClaimsDto { Value = fi.GetValue(null)!.ToString()!, Type = "Permissions", DisplayName = displayName });
             }
         }
 

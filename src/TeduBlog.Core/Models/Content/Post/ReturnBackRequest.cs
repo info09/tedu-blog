@@ -2,6 +2,6 @@
 {
     public class ReturnBackRequest
     {
-        public string Reason { set; get; }
+        public string Reason { set; get; } = default!;
     }
 }

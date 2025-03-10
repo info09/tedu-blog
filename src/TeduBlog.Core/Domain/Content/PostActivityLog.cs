@@ -17,6 +17,6 @@ namespace TeduBlog.Core.Domain.Content
         public Guid UserId { get; set; }
 
         [MaxLength(250)]
-        public string UserName { set; get; }
+        public string UserName { set; get; } = default!;
     }
 }

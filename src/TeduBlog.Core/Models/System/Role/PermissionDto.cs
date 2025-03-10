@@ -2,7 +2,7 @@
 {
     public class PermissionDto
     {
-        public string RoleId { get; set; }
-        public IList<RoleClaimsDto> RoleClaims { get; set; }
+        public string RoleId { get; set; } = default!;
+        public IList<RoleClaimsDto> RoleClaims { get; set; } = [];
     }
 }

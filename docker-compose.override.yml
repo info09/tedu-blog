@@ -11,3 +11,15 @@ services:
       - sqlserver_data:/var/lib/sqlserver/data
     ports:
       - "1433:1433"
+
+  tedu.api:
+    container_name: tedu.api
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:80
+      - "ConnectionStrings:DefaultConnectionString=Server=sqlserver;Database=Blog;User Id=sa;Password=123456aA@;Multipleactiveresultsets=true"
+    depends_on:
+      - sqlserver
+    ports:
+      - "8004:80"
+    restart: always

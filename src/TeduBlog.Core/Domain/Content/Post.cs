@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -19,7 +20,7 @@ namespace TeduBlog.Core.Domain.Content
         [Column(TypeName = "varchar(250)")]
         public required string Slug { get; set; }
 
-        [MaxLength(500)] 
+        [MaxLength(500)]
         public string? Description { get; set; }
 
         [Required]
@@ -48,9 +49,9 @@ namespace TeduBlog.Core.Domain.Content
         [Required]
         public required string CategoryName { set; get; }
         [MaxLength(250)]
-        public string AuthorUserName { set; get; }
+        public string AuthorUserName { set; get; } = default!;
         [MaxLength(250)]
-        public string AuthorName { set; get; }
+        public string AuthorName { set; get; } = default!;
 
         public DateTime? PaidDate { get; set; }
     }

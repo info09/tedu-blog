@@ -3,11 +3,13 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
+
 using Swashbuckle.AspNetCore.SwaggerGen;
+
 using System.Reflection;
 using System.Text;
+
 using TeduBlog.Api.Authorization;
 using TeduBlog.Api.Filters;
 using TeduBlog.Api.Services;
@@ -38,7 +40,7 @@ namespace TeduBlog.Api
             {
                 options.AddPolicy("AllowSpecificOrigin", policy =>
                 {
-                    policy.WithOrigins(configuration["AllowedOrigins"]) // Chỉ định origin cụ thể
+                    policy.WithOrigins(configuration["AllowedOrigins"]!) // Chỉ định origin cụ thể
                           .AllowCredentials()
                           .AllowAnyMethod()
                           .AllowAnyHeader();
@@ -81,9 +83,9 @@ namespace TeduBlog.Api
 
             // Business services and repositories
             var services = typeof(PostRepository).Assembly.GetTypes()
-                .Where(i => i.GetInterfaces().Any(i => i.Name == typeof(IRepositoryBase<,>).Name) && 
-                            !i.IsAbstract && 
-                            i.IsClass && 
+                .Where(i => i.GetInterfaces().Any(i => i.Name == typeof(IRepositoryBase<,>).Name) &&
+                            !i.IsAbstract &&
+                            i.IsClass &&
                             !i.IsGenericType);
 
             foreach (var service in services)
@@ -144,7 +146,7 @@ namespace TeduBlog.Api
                     ClockSkew = TimeSpan.FromSeconds(0),
                     ValidIssuer = configuration["JwtTokenSettings:Issuer"],
                     ValidAudience = configuration["JwtTokenSettings:Issuer"],
-                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["JwtTokenSettings:Key"]))
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["JwtTokenSettings:Key"]!))
                 };
             });
 

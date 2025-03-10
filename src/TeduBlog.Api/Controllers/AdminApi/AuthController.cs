@@ -62,7 +62,7 @@ namespace TeduBlog.Api.Controllers.AdminApi
             var accessToken = _tokenService.GenerateAccessToken(claims);
             var refreshToken = _tokenService.GenerateRefreshToken();
 
-            user.RefreshToken = refreshToken;
+            user!.RefreshToken = refreshToken;
             user.RefreshTokenExpiryTime = DateTime.Now.AddDays(30);
 
             await _userManager.UpdateAsync(user);
@@ -73,7 +73,7 @@ namespace TeduBlog.Api.Controllers.AdminApi
         private async Task<List<string>> GetPermissionsByUserIdAsync(string userId)
         {
             var user = await _userManager.FindByIdAsync(userId);
-            var roles = await _userManager.GetRolesAsync(user);
+            var roles = await _userManager.GetRolesAsync(user!);
             var permissions = new List<string>();
             var allPermissions = new List<RoleClaimsDto>();
             if (roles.Contains(Roles.Admin))
@@ -90,7 +90,7 @@ namespace TeduBlog.Api.Controllers.AdminApi
                 foreach (var roleName in roles)
                 {
                     var role = await _roleManager.FindByNameAsync(roleName);
-                    var claims = await _roleManager.GetClaimsAsync(role);
+                    var claims = await _roleManager.GetClaimsAsync(role!);
                     var roleClaimValues = claims.Select(x => x.Value).ToList();
                     permissions.AddRange(roleClaimValues);
                 }

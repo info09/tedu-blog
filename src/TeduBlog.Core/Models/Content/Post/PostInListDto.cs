@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
+
 using System.ComponentModel.DataAnnotations;
+
 using TeduBlog.Core.Domain.Content;
 
 namespace TeduBlog.Core.Models.Content.Post
@@ -17,8 +19,8 @@ namespace TeduBlog.Core.Models.Content.Post
         public required string CategorySlug { set; get; }
 
         public required string CategoryName { set; get; }
-        public string AuthorUserName { set; get; }
-        public string AuthorName { set; get; }
+        public string AuthorUserName { set; get; } = default!;
+        public string AuthorName { set; get; } = default!;
         public PostStatus Status { set; get; }
         public bool IsPaid { get; set; }
         public double RoyaltyAmount { get; set; }
