@@ -25,3 +25,28 @@ $enable-rtl: true;
 @import "primeng/resources/themes/lara-light-blue/theme.css";
 @import "primeng/resources/primeng.css";
 @import "primeicons/primeicons.css";
+
+// PrimeNG Button Styles
+.p-button {
+    border-radius: 6px !important;
+
+    &.p-button-sm {
+        padding: 0.4rem 1rem;
+        font-size: 0.875rem;
+    }
+
+    &.p-button-success {
+        background: #22c55e;
+        border-color: #22c55e;
+    }
+
+    &.p-button-warning {
+        background: #f59e0b;
+        border-color: #f59e0b;
+    }
+
+    &.p-button-danger {
+        background: #ef4444;
+        border-color: #ef4444;
+    }
+}
