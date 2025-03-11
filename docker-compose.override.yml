@@ -17,7 +17,7 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=http://+:80
-      - "ConnectionStrings:DefaultConnectionString=Server=sqlserver;Database=Blog;User Id=sa;Password=123456aA@;Multipleactiveresultsets=true"
+      - "ConnectionStrings:DefaultConnection=Server=sqlserver;Database=Blog;User Id=sa;Password=123456aA@;Multipleactiveresultsets=true;TrustServerCertificate=True"
     depends_on:
       - sqlserver
     ports:
