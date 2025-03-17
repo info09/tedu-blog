@@ -12,10 +12,13 @@
   >
     <div class="formgrid grid">
       <div class="field col-12 md:col-6">
-        <label for="name">Tên <span class="required">*</span></label>
+        <label for="name" class="block"
+          >Tên <span class="required">*</span></label
+        >
         <input
           id="name"
           type="text"
+          class="p-inputtext p-component"
           pInputText
           [pKeyFilter]="noSpecial"
           formControlName="name"
@@ -29,10 +32,13 @@
         ></app-validation-message>
       </div>
       <div class="field col-12 md:col-6">
-        <label for="slug">Slug<span class="required">*</span></label>
+        <label for="slug" class="block"
+          >Slug<span class="required">*</span></label
+        >
         <input
           id="slug"
           type="text"
+          class="p-inputtext p-component"
           pInputText
           [pKeyFilter]="noSpecial"
           formControlName="slug"

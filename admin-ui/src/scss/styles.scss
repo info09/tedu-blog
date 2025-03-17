@@ -50,3 +50,48 @@ $enable-rtl: true;
         border-color: #ef4444;
     }
 }
+
+// PrimeNG Input Text Styles
+.p-inputtext {
+    padding: 0.5rem 0.75rem;
+    border-radius: 6px;
+    border: 1px solid #ced4da;
+    transition: background-color 0.2s, color 0.2s, border-color 0.2s, box-shadow 0.2s;
+    font-size: 1rem;
+
+    &:enabled:focus {
+        outline: 0 none;
+        outline-offset: 0;
+        box-shadow: 0 0 0 0.2rem rgba(147, 197, 253, 0.5);
+        border-color: #93c5fd;
+    }
+
+    &:enabled:hover {
+        border-color: #93c5fd;
+    }
+
+    &.ng-dirty.ng-invalid {
+        border-color: #ff0000;
+    }
+}
+
+.p-inputtext.p-component {
+    width: 100%;
+}
+
+.field {
+    margin-bottom: 1rem;
+
+    label {
+        display: inline-block;
+        margin-bottom: 0.5rem;
+
+        &.block {
+            display: block;
+        }
+    }
+
+    .required {
+        color: #ff0000;
+    }
+}

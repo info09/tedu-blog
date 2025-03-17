@@ -2,70 +2,64 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ContentRoutingModule } from './content-routing.module';
+import { PostComponent } from './posts/post.component';
 import { PostCategoryComponent } from './post-categories/post-category.component';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
-import { PanelModule } from 'primeng/panel';
 import { BlockUIModule } from 'primeng/blockui';
 import { PaginatorModule } from 'primeng/paginator';
-import { BadgeModule } from 'primeng/badge';
+import { PanelModule } from 'primeng/panel';
 import { CheckboxModule } from 'primeng/checkbox';
+import { SharedModule } from 'primeng/api';
 import { TableModule } from 'primeng/table';
-import { KeyFilterModule } from 'primeng/keyfilter';
+import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 import { TeduSharedModule } from '../../shared/modules/tedu-shared.module';
-import { PostCategoryDetailComponent } from './post-categories/post-category-detail.component';
-import { PostComponent } from './posts/post.component';
+import { KeyFilterModule } from 'primeng/keyfilter';
 import { PostDetailComponent } from './posts/post-detail.component';
-import { DynamicDialogModule } from 'primeng/dynamicdialog';
-import { ImageModule } from 'primeng/image';
-import { InputNumberModule } from 'primeng/inputnumber';
-import { DropdownModule } from 'primeng/dropdown';
-import { InputTextareaModule } from 'primeng/inputtextarea';
+import { PostCategoryDetailComponent } from './post-categories/post-category-detail.component';
 import { EditorModule } from 'primeng/editor';
-import { AutoCompleteModule } from 'primeng/autocomplete';
-import { PostReturnReasonComponent } from './posts/post-return-reason.component';
-import { PostActivityLogComponent } from './posts/post-activity-log.component';
-import { SeriesComponent } from './series/series.component';
-import { ButtonModule } from 'primeng/button';
-import { IconModule } from '@coreui/icons-angular';
-import { ChartjsModule } from '@coreui/angular-chartjs';
-import { SeriesDetailComponent } from './series/series-detail.component';
+import { InputNumberModule } from 'primeng/inputnumber';
+import { InputTextareaModule } from 'primeng/inputtextarea';
+import { BadgeModule } from 'primeng/badge';
 import { PostSeriesComponent } from './posts/post-series.component';
+import { PostActivityLogComponent } from './posts/post-activity-log.component';
+import { PostReturnReasonComponent } from './posts/post-return-reason.component';
+import { SeriesComponent } from './series/series.component';
+import { SeriesDetailComponent } from './series/series-detail.component';
 import { SeriesPostComponent } from './series/series-post.component';
+import { ImageModule } from 'primeng/image';
+import { AutoCompleteModule } from 'primeng/autocomplete';
 @NgModule({
   imports: [
     ContentRoutingModule,
-    IconModule,
     CommonModule,
     ReactiveFormsModule,
-    ChartjsModule,
+    TableModule,
     ProgressSpinnerModule,
-    PanelModule,
     BlockUIModule,
     PaginatorModule,
-    BadgeModule,
+    PanelModule,
     CheckboxModule,
-    TableModule,
-    KeyFilterModule,
-    TeduSharedModule,
     ButtonModule,
     InputTextModule,
-    InputTextareaModule,
-    DropdownModule,
+    SharedModule,
+    KeyFilterModule,
+    TeduSharedModule,
     EditorModule,
     InputNumberModule,
+    InputTextareaModule,
+    BadgeModule,
     ImageModule,
     AutoCompleteModule,
-    DynamicDialogModule,
   ],
   declarations: [
     PostComponent,
-    PostDetailComponent,
-    PostReturnReasonComponent,
-    PostActivityLogComponent,
-    PostSeriesComponent,
     PostCategoryComponent,
+    PostDetailComponent,
     PostCategoryDetailComponent,
+    PostSeriesComponent,
+    PostActivityLogComponent,
+    PostReturnReasonComponent,
     SeriesComponent,
     SeriesDetailComponent,
     SeriesPostComponent,

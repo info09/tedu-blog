@@ -10,7 +10,7 @@
         label="Thêm"
         icon="pi pi-plus"
         (click)="showAddModal()"
-        class="p-button-sm ms-1 p-button-info"
+        class="p-button-sm p-button-success ms-1"
       ></button>
       <button
         appPermission
@@ -59,7 +59,16 @@
           />
         </div>
         <div class="col">
-          <button type="button" pButton (click)="loadData()">Tìm</button>
+          <button
+            pButton
+            pRipple
+            type="button"
+            icon="pi pi-search"
+            [style]="{ 'border-radius': '6px' }"
+            class="p-button-sm"
+            label="Tìm"
+            (click)="loadData()"
+          ></button>
         </div>
       </div>
     </div>

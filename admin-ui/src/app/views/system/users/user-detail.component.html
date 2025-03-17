@@ -171,7 +171,12 @@
       </div>
     </div>
     <ng-template pTemplate="footer">
-      <button type="submit" pButton [disabled]="!form.valid || btnDisabled">
+      <button
+        type="submit"
+        pButton
+        class="btn btn-primary"
+        [disabled]="!form.valid || btnDisabled"
+      >
         Lưu lại
       </button>
     </ng-template>
