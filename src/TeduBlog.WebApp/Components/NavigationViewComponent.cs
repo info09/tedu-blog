@@ -16,7 +16,7 @@ namespace TeduBlog.WebApp.Components
         public async Task<IViewComponentResult> InvokeAsync()
         {
             var model = await _unitOfWork.PostCategoryRepository.GetAllAsync();
-            var navItems = model.Select(x => new NavigationItemViewModel()
+            var navItems = model.Where(i => i.IsActive).Select(x => new NavigationItemViewModel()
             {
                 Slug = x.Slug,
                 Name = x.Name,

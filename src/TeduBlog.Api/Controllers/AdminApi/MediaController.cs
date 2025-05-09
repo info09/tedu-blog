@@ -12,11 +12,13 @@ namespace TeduBlog.Api.Controllers.AdminApi
     {
         private readonly IWebHostEnvironment _webHostEnvironment;
         private readonly MediaSettings _mediaSettings;
+        private readonly IConfiguration _configuration;
 
-        public MediaController(IWebHostEnvironment webHostEnvironment, IOptions<MediaSettings> mediaSettings)
+        public MediaController(IWebHostEnvironment webHostEnvironment, IOptions<MediaSettings> mediaSettings, IConfiguration configuration)
         {
             _webHostEnvironment = webHostEnvironment;
             _mediaSettings = mediaSettings.Value;
+            _configuration = configuration;
         }
 
         [HttpPost]
@@ -36,7 +38,8 @@ namespace TeduBlog.Api.Controllers.AdminApi
                 throw new Exception("Không cho phép tải lên file không phải ảnh.");
             }
             var imageFolder = $@"\{_mediaSettings.ImageFolder}\images\{type}\{now:MMyyyy}";
-            var folder = _webHostEnvironment.WebRootPath + imageFolder;
+            var folder = _configuration["ImageStoragePath"] + imageFolder;
+            //var folder = _webHostEnvironment.WebRootPath + imageFolder;
 
             if (!Directory.Exists(folder))
             {
