@@ -11,4 +11,8 @@
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="8.0.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <EditorConfigFiles Remove="E:\WorkingFolder\Learning\.NET\tedu-blog\src\TeduBlog.Core\.editorconfig" />
+  </ItemGroup>
+
 </Project>

@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace TeduBlog.Core.Domain.Content
+namespace TeduBlog.Core.Domain.Content                
 {
     [Table("Tags")]
     public class Tag
@@ -15,6 +15,6 @@ namespace TeduBlog.Core.Domain.Content
 
         [Required]
         [MaxLength(100)]
-        public required string Name { get; set; }
+        public required string Name { get; set; }          
     }
 }

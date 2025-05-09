@@ -15,7 +15,7 @@ import { forkJoin, Subject, takeUntil } from 'rxjs';
 import { UploadService } from '../../../shared/services/upload.service';
 import { UtilityService } from '../../../shared/services/utility.service';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { environment } from '../../../../environment/environment';
+import { environment } from '../../../../environments/environment';
 
 interface AutoCompleteCompleteEvent {
   originalEvent: Event;

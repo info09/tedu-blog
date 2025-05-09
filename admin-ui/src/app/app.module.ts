@@ -1,4 +1,3 @@
-import { environment } from './../environment/environment';
 import { NgModule } from '@angular/core';
 import {
   HashLocationStrategy,
@@ -72,6 +71,7 @@ import {
 } from '@coreui/angular';
 import { CardModule } from 'primeng/card';
 import { BroadcastService } from './shared/services/broadcast.service';
+import { environment } from '../environments/environment';
 
 @NgModule({
   declarations: [AppComponent, ...APP_CONTAINERS],

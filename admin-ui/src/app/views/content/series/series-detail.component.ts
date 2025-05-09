@@ -1,5 +1,5 @@
 import { UploadService } from './../../../shared/services/upload.service';
-import { environment } from './../../../../environment/environment';
+import { environment } from '../../../../environments/environment';
 import {
   FormBuilder,
   FormControl,

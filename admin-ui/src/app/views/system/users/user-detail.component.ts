@@ -22,7 +22,7 @@ import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { UtilityService } from '../../../shared/services/utility.service';
 import { DomSanitizer } from '@angular/platform-browser';
 import { formatDate } from '@angular/common';
-import { environment } from '../../../../environment/environment';
+import { environment } from '../../../../environments/environment';
 import { UploadService } from '../../../shared/services/upload.service';
 @Component({
   templateUrl: 'user-detail.component.html',
