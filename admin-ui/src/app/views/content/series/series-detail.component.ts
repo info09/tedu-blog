@@ -122,7 +122,7 @@ export class SeriesDetailComponent implements OnInit, OnDestroy {
       this.uploadService.uploadImage('posts', event.target.files).subscribe({
         next: (response: any) => {
           this.form.controls['thumbnail'].setValue(response.path);
-          this.thumbnailImage = environment.API_URL + response.path;
+          this.thumbnailImage = environment.API_URL + '/' + response.path;
         },
         error: (err: any) => {
           console.log(err);
@@ -169,7 +169,8 @@ export class SeriesDetailComponent implements OnInit, OnDestroy {
       thumbnail: new FormControl(this.selectedEntity.thumbnail || null),
     });
     if (this.selectedEntity.thumbnail) {
-      this.thumbnailImage = environment.API_URL + this.selectedEntity.thumbnail;
+      this.thumbnailImage =
+        environment.API_URL + '/' + this.selectedEntity.thumbnail;
     }
   }
 

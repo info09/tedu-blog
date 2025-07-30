@@ -37,9 +37,14 @@ namespace TeduBlog.Api.Controllers.AdminApi
             {
                 throw new Exception("Không cho phép tải lên file không phải ảnh.");
             }
-            var imageFolder = $@"\{_mediaSettings.ImageFolder}\images\{type}\{now:MMyyyy}";
-            var folder = _configuration["ImageStoragePath"] + imageFolder;
+            //var imageFolder = $@"\{_mediaSettings.ImageFolder}\images\{type}\{now:MMyyyy}";
+
             //var folder = _webHostEnvironment.WebRootPath + imageFolder;
+
+            //var folder = Path.Combine(_webHostEnvironment.WebRootPath, _mediaSettings.ImageFolder!, "images", type, now.ToString("MMyyyy"));
+
+            var imageFolder = Path.Combine(_mediaSettings.ImageFolder!, now.ToString("MMyyyy"));
+            var folder = Path.Combine(_webHostEnvironment.WebRootPath, _mediaSettings.ImageFolder!, now.ToString("MMyyyy"));
 
             if (!Directory.Exists(folder))
             {

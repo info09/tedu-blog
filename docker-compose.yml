@@ -29,6 +29,7 @@ services:
       - "ConnectionStrings__DefaultConnection=Server=sqlserver;Database=Blog;User Id=sa;Password=123456aA@;MultipleActiveResultSets=true;TrustServerCertificate=True"
     volumes:
       - ~/.aspnet/https:/https:ro
+      - E:/app:/app/wwwroot\media\images\posts\052025
     depends_on:
       - sqlserver
     ports:

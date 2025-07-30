@@ -142,7 +142,7 @@
                 pTooltip="Loạt bài"
                 tooltipPosition="top"
                 (click)="addToSeries(row.id)"
-                class="p-button-rounded p-button-text"
+                class="p-button-sm ms-1"
               ></button>
               <button
                 *ngIf="row.status != 3"
@@ -155,7 +155,7 @@
                 pTooltip="Duyệt bài"
                 tooltipPosition="top"
                 (click)="approve(row.id)"
-                class="p-button-rounded p-button-text p-button-success"
+                class="p-button-sm ms-1 p-button-success"
               ></button>
               <button
                 *ngIf="row.status != 3 && row.status != 1"
@@ -168,7 +168,7 @@
                 (click)="sendToApprove(row.id)"
                 appPermission
                 appPolicy="Permissions.Posts.Edit"
-                class="p-button-rounded p-button-text p-button-danger"
+                class="p-button-sm ms-1 p-button-danger"
               ></button>
               <button
                 *ngIf="row.status != 3"
@@ -181,7 +181,7 @@
                 (click)="reject(row.id)"
                 appPermission
                 appPolicy="Permissions.Posts.Approve"
-                class="p-button-rounded p-button-text p-button-danger"
+                class="p-button-sm ms-1 p-button-danger"
               ></button>
               <button
                 pButton
@@ -193,7 +193,7 @@
                 (click)="showLogs(row.id)"
                 appPermission
                 appPolicy="Permissions.Posts.View"
-                class="p-button-rounded p-button-text p-button-info"
+                class="p-button-sm ms-1 p-button-info"
               ></button>
             </td>
           </tr>

@@ -171,7 +171,7 @@ export class PostDetailComponent implements OnInit, OnDestroy {
       this.uploadService.uploadImage('posts', event.target.files).subscribe({
         next: (response: any) => {
           this.form.controls['thumbnail'].setValue(response.path);
-          this.thumbnailImage = environment.API_URL + response.path;
+          this.thumbnailImage = environment.API_URL + '/' + response.path;
         },
         error: (err: any) => {
           console.log(err);
