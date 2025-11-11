@@ -1,5 +1,7 @@
-﻿using AutoMapper;
+using AutoMapper;
+
 using Microsoft.AspNetCore.Identity;
+
 using TeduBlog.Core.Domain.Identity;
 using TeduBlog.Core.Repositories;
 using TeduBlog.Core.SeedWorks;

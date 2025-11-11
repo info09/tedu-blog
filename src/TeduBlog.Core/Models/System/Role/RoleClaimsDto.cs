@@ -1,10 +1,9 @@
-﻿namespace TeduBlog.Core.Models.System.Role
+namespace TeduBlog.Core.Models.System.Role;
+
+public class RoleClaimsDto
 {
-    public class RoleClaimsDto
-    {
-        public required string Type { get; set; }
-        public required string Value { get; set; }
-        public string? DisplayName { get; set; }
-        public bool Selected { get; set; }
-    }
+    public required string Type { get; set; }
+    public required string Value { get; set; }
+    public string? DisplayName { get; set; }
+    public bool Selected { get; set; }
 }

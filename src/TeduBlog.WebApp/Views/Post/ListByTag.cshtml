@@ -1,4 +1,4 @@
-﻿@using TeduBlog.Core.SeedWorks.Constants
+@using TeduBlog.Core.SeedWorks.Constants
 @model PostListByTagViewModel
 @{
     ViewData["Title"] = Model.Tag?.Name + (Model.Posts?.CurrentPage > 1 ? $" Trang {Model.Posts.CurrentPage}" : "");

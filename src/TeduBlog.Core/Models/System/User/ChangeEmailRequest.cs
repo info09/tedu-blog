@@ -1,7 +1,6 @@
-﻿namespace TeduBlog.Core.Models.System.User
+namespace TeduBlog.Core.Models.System.User;
+
+public class ChangeEmailRequest
 {
-    public class ChangeEmailRequest
-    {
-        public string Email { get; set; } = default!;
-    }
+    public string Email { get; set; } = default!;
 }

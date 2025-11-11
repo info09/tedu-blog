@@ -1,7 +1,9 @@
-﻿using AutoMapper;
+using AutoMapper;
+
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+
 using TeduBlog.Api.Extensions;
 using TeduBlog.Core.Domain.Content;
 using TeduBlog.Core.Domain.Identity;
@@ -10,6 +12,7 @@ using TeduBlog.Core.Models;
 using TeduBlog.Core.Models.Content.Post;
 using TeduBlog.Core.SeedWorks;
 using TeduBlog.Core.SeedWorks.Constants;
+
 using static TeduBlog.Core.SeedWorks.Constants.Permissions;
 
 namespace TeduBlog.Api.Controllers.AdminApi
@@ -43,10 +46,7 @@ namespace TeduBlog.Api.Controllers.AdminApi
         public async Task<ActionResult<PostDto>> GetPostById(Guid id)
         {
             var post = await _unitOfWork.PostRepository.GetByIdAsync(id);
-            if (post == null)
-                return NotFound();
-
-            return Ok(post);
+            return post == null ? (ActionResult<PostDto>)NotFound() : (ActionResult<PostDto>)Ok(post);
         }
 
         [HttpPost]
@@ -54,7 +54,10 @@ namespace TeduBlog.Api.Controllers.AdminApi
         public async Task<IActionResult> CreatePost([FromBody] CreateUpdatePostRequest request)
         {
             if (await _unitOfWork.PostRepository.IsSlugAlreadyExisted(request.Slug))
+            {
                 return BadRequest("Đã tồn tại Slug");
+            }
+
             var post = _mapper.Map<CreateUpdatePostRequest, Post>(request);
             var postId = Guid.NewGuid();
             var category = await _unitOfWork.PostCategoryRepository.GetByIdAsync(request.CategoryId);
@@ -79,7 +82,7 @@ namespace TeduBlog.Api.Controllers.AdminApi
                     if (tag == null)
                     {
                         tagId = Guid.NewGuid();
-                        _unitOfWork.TagRepository.Add(new Tag() { Id = tagId, Name = tagName, Slug = tagSlug});
+                        _unitOfWork.TagRepository.Add(new Tag() { Id = tagId, Name = tagName, Slug = tagSlug });
                     }
                     else
                     {
@@ -100,11 +103,15 @@ namespace TeduBlog.Api.Controllers.AdminApi
         public async Task<IActionResult> UpdatePost(Guid id, [FromBody] CreateUpdatePostRequest request)
         {
             if (await _unitOfWork.PostRepository.IsSlugAlreadyExisted(request.Slug, id))
+            {
                 return BadRequest("Đã tồn tại slug");
+            }
 
             var post = await _unitOfWork.PostRepository.GetByIdAsync(id);
             if (post == null)
+            {
                 return NotFound();
+            }
 
             if (post.CategoryId != request.CategoryId)
             {
@@ -148,7 +155,10 @@ namespace TeduBlog.Api.Controllers.AdminApi
             {
                 var post = await _unitOfWork.PostRepository.GetByIdAsync(id);
                 if (post == null)
+                {
                     return NotFound();
+                }
+
                 _unitOfWork.PostRepository.Remove(post);
             }
             var result = await _unitOfWork.CompleteAsync();

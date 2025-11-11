@@ -1,8 +1,7 @@
-﻿namespace TeduBlog.Core.Models.System.Role
+namespace TeduBlog.Core.Models.System.Role;
+
+public class PermissionDto
 {
-    public class PermissionDto
-    {
-        public string RoleId { get; set; } = default!;
-        public IList<RoleClaimsDto> RoleClaims { get; set; } = [];
-    }
+    public string RoleId { get; set; } = default!;
+    public IList<RoleClaimsDto> RoleClaims { get; set; } = [];
 }

@@ -14,40 +14,40 @@ services:
     ports:
       - "1433:1433"
 
-  tedu.api:
-    image: ${DOCKER_REGISTRY-}tedu-api:${PLATFORM:-linux}-${TAG:-latest}
-    build:
-     context: .
-     dockerfile: src/TeduBlog.Api/Dockerfile
-    container_name: tedu.api
-    environment:
-      - ASPNETCORE_ENVIRONMENT=Development
-      - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/tedu-blog.pfx
-      - ASPNETCORE_Kestrel__Certificates__Default__Password=password!
-      - ASPNETCORE_URLS=http://+:80;https://+:443
-      - ASPNETCORE_HTTPS_PORT=9004
-      - "ConnectionStrings__DefaultConnection=Server=sqlserver;Database=Blog;User Id=sa;Password=123456aA@;MultipleActiveResultSets=true;TrustServerCertificate=True"
-    volumes:
-      - ~/.aspnet/https:/https:ro
-      - E:/app:/app/wwwroot\media\images\posts\052025
-    depends_on:
-      - sqlserver
-    ports:
-      - "8004:80"
-      - "9004:443"
-    restart: always
+  # tedu.api:
+  #   image: ${DOCKER_REGISTRY-}tedu-api:${PLATFORM:-linux}-${TAG:-latest}
+  #   build:
+  #    context: .
+  #    dockerfile: src/TeduBlog.Api/Dockerfile
+  #   container_name: tedu.api
+  #   environment:
+  #     - ASPNETCORE_ENVIRONMENT=Development
+  #     - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/tedu-blog.pfx
+  #     - ASPNETCORE_Kestrel__Certificates__Default__Password=password!
+  #     - ASPNETCORE_URLS=http://+:80;https://+:443
+  #     - ASPNETCORE_HTTPS_PORT=9004
+  #     - "ConnectionStrings__DefaultConnection=Server=sqlserver;Database=Blog;User Id=sa;Password=123456aA@;MultipleActiveResultSets=true;TrustServerCertificate=True"
+  #   volumes:
+  #     - ~/.aspnet/https:/https:ro
+  #     - E:/app:/app/wwwroot\media\images\posts\052025
+  #   depends_on:
+  #     - sqlserver
+  #   ports:
+  #     - "8004:80"
+  #     - "9004:443"
+  #   restart: always
 
-  tedu.web:
-    image: tedu-angular-client
-    build:
-      context: ./admin-ui
-      dockerfile: Dockerfile
-    container_name: tedu.web
-    ports:
-      - "4201:80"
-    restart: always
-    depends_on:
-      - tedu.api
+  # tedu.web:
+  #   image: tedu-angular-client
+  #   build:
+  #     context: ./admin-ui
+  #     dockerfile: Dockerfile
+  #   container_name: tedu.web
+  #   ports:
+  #     - "4201:80"
+  #   restart: always
+  #   depends_on:
+  #     - tedu.api
 
 #network section
 networks:

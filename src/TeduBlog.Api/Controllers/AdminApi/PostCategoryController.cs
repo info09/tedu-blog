@@ -1,10 +1,13 @@
-﻿using AutoMapper;
+using AutoMapper;
+
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+
 using TeduBlog.Core.Domain.Content;
 using TeduBlog.Core.Models;
 using TeduBlog.Core.Models.Content.PostCategory;
 using TeduBlog.Core.SeedWorks;
+
 using static TeduBlog.Core.SeedWorks.Constants.Permissions;
 
 namespace TeduBlog.Api.Controllers.AdminApi
@@ -79,7 +82,7 @@ namespace TeduBlog.Api.Controllers.AdminApi
                 {
                     return NotFound();
                 }
-                if(await _unitOfWork.PostCategoryRepository.HasPost(id))
+                if (await _unitOfWork.PostCategoryRepository.HasPost(id))
                 {
                     return BadRequest("Danh mục đang chứa bài viết, không thể xóa");
                 }

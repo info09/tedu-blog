@@ -1,8 +1,7 @@
-﻿namespace TeduBlog.Core.Models.Auth
+namespace TeduBlog.Core.Models.Auth;
+
+public class AuthenticatedResult
 {
-    public class AuthenticatedResult
-    {
-        public required string Token { get; set; }
-        public required string RefreshToken { get; set; }
-    }
+    public required string Token { get; set; }
+    public required string RefreshToken { get; set; }
 }

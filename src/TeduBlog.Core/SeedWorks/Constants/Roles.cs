@@ -1,7 +1,6 @@
-﻿namespace TeduBlog.Core.SeedWorks.Constants
+namespace TeduBlog.Core.SeedWorks.Constants;
+
+public static class Roles
 {
-    public class Roles
-    {
-        public static string Admin = "Admin";
-    }
+    public const string Admin = "Admin";
 }

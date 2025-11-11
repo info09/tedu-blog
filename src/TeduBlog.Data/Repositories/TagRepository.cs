@@ -1,5 +1,7 @@
-﻿using AutoMapper;
+using AutoMapper;
+
 using Microsoft.EntityFrameworkCore;
+
 using TeduBlog.Core.Domain.Content;
 using TeduBlog.Core.Models.Content.Post;
 using TeduBlog.Core.Repositories;

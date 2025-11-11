@@ -1,31 +1,32 @@
-﻿using AutoMapper;
 using System.ComponentModel.DataAnnotations;
+
+using AutoMapper;
+
 using TeduBlog.Core.Domain.Content;
 
-namespace TeduBlog.Core.Models.Content.Post
+namespace TeduBlog.Core.Models.Content.Post;
+
+public class CreateUpdateSeriesRequest
 {
-    public class CreateUpdateSeriesRequest
+    [MaxLength(250)]
+    public required string Name { get; set; }
+    public required string Description { get; set; }
+    [MaxLength(250)]
+    public required string Slug { get; set; }
+    public bool IsActive { get; set; }
+    public int SortOrder { get; set; }
+    [MaxLength(250)]
+    public string? SeoKeywords { get; set; }
+    [MaxLength(250)]
+    public string? SeoDescription { get; set; }
+    [MaxLength(250)]
+    public string? Thumbnail { set; get; }
+    public string? Content { get; set; }
+    public class AutoMapperProfiles : Profile
     {
-        [MaxLength(250)]
-        public required string Name { get; set; }
-        public required string Description { get; set; }
-        [MaxLength(250)]
-        public required string Slug { get; set; }
-        public bool IsActive { get; set; }
-        public int SortOrder { get; set; }
-        [MaxLength(250)]
-        public string? SeoKeywords { get; set; }
-        [MaxLength(250)]
-        public string? SeoDescription { get; set; }
-        [MaxLength(250)]
-        public string? Thumbnail { set; get; }
-        public string? Content { get; set; }
-        public class AutoMapperProfiles : Profile
+        public AutoMapperProfiles()
         {
-            public AutoMapperProfiles()
-            {
-                CreateMap<CreateUpdateSeriesRequest, Series>();
-            }
+            CreateMap<CreateUpdateSeriesRequest, Series>();
         }
     }
 }

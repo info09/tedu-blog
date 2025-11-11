@@ -1,4 +1,4 @@
-﻿using TeduBlog.Core.Repositories;
+using TeduBlog.Core.Repositories;
 
 namespace TeduBlog.Core.SeedWorks
 {

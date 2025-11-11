@@ -1,6 +1,7 @@
-﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+
 using TeduBlog.Core.Domain.Content;
 using TeduBlog.Core.Domain.Identity;
 using TeduBlog.Core.SeedWorks.Constants;

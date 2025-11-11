@@ -1,7 +1,9 @@
-﻿using Microsoft.AspNetCore.Authorization;
+using System.Net.Http.Headers;
+
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
-using System.Net.Http.Headers;
+
 using TeduBlog.Core.ConfigOptions;
 
 namespace TeduBlog.Api.Controllers.AdminApi
@@ -12,36 +14,34 @@ namespace TeduBlog.Api.Controllers.AdminApi
     {
         private readonly IWebHostEnvironment _webHostEnvironment;
         private readonly MediaSettings _mediaSettings;
-        private readonly IConfiguration _configuration;
 
-        public MediaController(IWebHostEnvironment webHostEnvironment, IOptions<MediaSettings> mediaSettings, IConfiguration configuration)
+        public MediaController(IWebHostEnvironment webHostEnvironment, IOptions<MediaSettings> mediaSettings)
         {
             _webHostEnvironment = webHostEnvironment;
             _mediaSettings = mediaSettings.Value;
-            _configuration = configuration;
         }
 
         [HttpPost]
         [AllowAnonymous]
+        [ProducesResponseType(typeof(string), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public IActionResult UploadImage(string type)
         {
             var allowImageTypes = _mediaSettings.AllowImageFileTypes?.Split(',');
             var now = DateTime.Now;
             var files = Request.Form.Files;
             if (files.Count == 0)
+            {
                 return null!;
+            }
 
             var file = files[0];
             var fileName = ContentDispositionHeaderValue.Parse(file.ContentDisposition)?.FileName?.Trim('"');
             if (allowImageTypes?.Any(x => fileName?.EndsWith(x, StringComparison.OrdinalIgnoreCase) == true) == false)
             {
-                throw new Exception("Không cho phép tải lên file không phải ảnh.");
+                var exception = new Exception("Không cho phép tải lên file không phải ảnh.");
+                throw exception;
             }
-            //var imageFolder = $@"\{_mediaSettings.ImageFolder}\images\{type}\{now:MMyyyy}";
-
-            //var folder = _webHostEnvironment.WebRootPath + imageFolder;
-
-            //var folder = Path.Combine(_webHostEnvironment.WebRootPath, _mediaSettings.ImageFolder!, "images", type, now.ToString("MMyyyy"));
 
             var imageFolder = Path.Combine(_mediaSettings.ImageFolder!, now.ToString("MMyyyy"));
             var folder = Path.Combine(_webHostEnvironment.WebRootPath, _mediaSettings.ImageFolder!, now.ToString("MMyyyy"));

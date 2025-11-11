@@ -1,4 +1,4 @@
-﻿using TeduBlog.Core.Domain.Royalty;
+using TeduBlog.Core.Domain.Royalty;
 
 namespace TeduBlog.Core.Services
 {

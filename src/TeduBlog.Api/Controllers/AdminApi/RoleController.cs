@@ -1,10 +1,12 @@
-﻿using AutoMapper;
+using System.Reflection;
+
+using AutoMapper;
+
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using System.Reflection;
+
 using TeduBlog.Api.Extensions;
 using TeduBlog.Api.Filters;
 using TeduBlog.Core.Domain.Identity;
@@ -60,9 +62,7 @@ namespace TeduBlog.Api.Controllers.AdminApi
         public async Task<ActionResult<RoleDto>> GetRoleById(Guid id)
         {
             var role = await _roleManager.FindByIdAsync(id.ToString());
-            if (role == null)
-                return NotFound();
-            return Ok(_mapper.Map<RoleDto>(role));
+            return role == null ? (ActionResult<RoleDto>)NotFound() : (ActionResult<RoleDto>)Ok(_mapper.Map<RoleDto>(role));
         }
 
 
@@ -87,7 +87,10 @@ namespace TeduBlog.Api.Controllers.AdminApi
         {
             var role = await _roleManager.FindByIdAsync(id.ToString());
             if (role == null)
+            {
                 return NotFound();
+            }
+
             role.Name = request.Name;
             role.DisplayName = request.DisplayName;
             await _roleManager.UpdateAsync(role);
@@ -101,7 +104,10 @@ namespace TeduBlog.Api.Controllers.AdminApi
             {
                 var role = await _roleManager.FindByIdAsync(id.ToString());
                 if (role == null)
+                {
                     return NotFound();
+                }
+
                 await _roleManager.DeleteAsync(role);
             }
             return Ok();
@@ -121,7 +127,9 @@ namespace TeduBlog.Api.Controllers.AdminApi
 
             var role = await _roleManager.FindByIdAsync(roleId);
             if (role == null)
+            {
                 return NotFound();
+            }
 
             model.RoleId = roleId;
             var claims = await _roleManager.GetClaimsAsync(role);
@@ -145,7 +153,10 @@ namespace TeduBlog.Api.Controllers.AdminApi
         public async Task<IActionResult> SavePermissions([FromBody] PermissionDto model)
         {
             var role = await _roleManager.FindByIdAsync(model.RoleId);
-            if (role == null) return NotFound();
+            if (role == null)
+            {
+                return NotFound();
+            }
 
             var claims = await _roleManager.GetClaimsAsync(role);
             foreach (var claim in claims)
@@ -153,7 +164,7 @@ namespace TeduBlog.Api.Controllers.AdminApi
                 await _roleManager.RemoveClaimAsync(role, claim);
             }
             var selectedClaims = model.RoleClaims.Where(i => i.Selected).ToList();
-            foreach(var claim in selectedClaims)
+            foreach (var claim in selectedClaims)
             {
                 await _roleManager.AddPermissionClaim(role, claim.Value);
             }

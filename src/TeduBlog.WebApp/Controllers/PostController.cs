@@ -1,71 +1,71 @@
-﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc;
+
 using TeduBlog.Core.SeedWorks;
 using TeduBlog.WebApp.Models;
 
-namespace TeduBlog.WebApp.Controllers
+namespace TeduBlog.WebApp.Controllers;
+
+public class PostController : Controller
 {
-    public class PostController : Controller
+    private readonly IUnitOfWork _unitOfWork;
+
+    public PostController(IUnitOfWork unitOfWork)
     {
-        private readonly IUnitOfWork _unitOfWork;
+        _unitOfWork = unitOfWork;
+    }
 
-        public PostController(IUnitOfWork unitOfWork)
-        {
-            _unitOfWork = unitOfWork;
-        }
+    public IActionResult Index()
+    {
+        return View();
+    }
 
-        public IActionResult Index()
+    [Route("posts/{categorySlug}")]
+    public async Task<IActionResult> ListByCategory([FromRoute] string categorySlug, [FromQuery] int page = 1)
+    {
+        var posts = await _unitOfWork.PostRepository.GetPostByCategoryPaging(categorySlug, page, 2);
+        var category = await _unitOfWork.PostCategoryRepository.GetBySlug(categorySlug);
+        if (category == null)
         {
-            return View();
+            return NotFound();
         }
+        return View(new PostListByCategoryViewModel()
+        {
+            Posts = posts,
+            Category = category
+        });
+    }
 
-        [Route("posts/{categorySlug}")]
-        public async Task<IActionResult> ListByCategory([FromRoute]string categorySlug, [FromQuery] int page = 1)
+    [Route("post/{slug}")]
+    public async Task<IActionResult> Details([FromRoute] string slug)
+    {
+        var post = await _unitOfWork.PostRepository.GetBySlug(slug);
+        if (post == null)
         {
-            var posts = await _unitOfWork.PostRepository.GetPostByCategoryPaging(categorySlug, page, 2);
-            var category = await _unitOfWork.PostCategoryRepository.GetBySlug(categorySlug);
-            if (category == null)
-            {
-                return NotFound();
-            }
-            return View(new PostListByCategoryViewModel()
-            {
-                Posts = posts,
-                Category = category
-            });
+            return NotFound();
         }
+        var category = await _unitOfWork.PostCategoryRepository.GetBySlug(post.CategorySlug);
+        var tags = await _unitOfWork.PostRepository.GetTagObjectsByPostId(post.Id);
+        return View(new PostDetailViewModel()
+        {
+            Post = post,
+            Category = category,
+            Tags = tags
+        });
+    }
 
-        [Route("post/{slug}")]
-        public async Task<IActionResult> Details([FromRoute] string slug)
+    [Route("tag/{slug}")]
+    public async Task<IActionResult> ListByTag([FromRoute] string slug, [FromQuery] int page = 1)
+    {
+        var tag = await _unitOfWork.TagRepository.GetBySlug(slug);
+        if (tag == null)
         {
-            var post = await _unitOfWork.PostRepository.GetBySlug(slug);
-            if (post == null)
-            {
-                return NotFound();
-            }
-            var category = await _unitOfWork.PostCategoryRepository.GetBySlug(post.CategorySlug);
-            var tags = await _unitOfWork.PostRepository.GetTagObjectsByPostId(post.Id);
-            return View(new PostDetailViewModel()
-            {
-                Post = post,
-                Category = category,
-                Tags = tags
-            });
+            return NotFound();
         }
-
-        [Route("tag/{slug}")]
-        public async Task<IActionResult> ListByTag([FromRoute] string slug, [FromQuery] int page = 1)
+        var posts = await _unitOfWork.PostRepository.GetPostByTagPaging(slug, page, 2);
+        return View(new PostListByTagViewModel()
         {
-            var tag = await _unitOfWork.TagRepository.GetBySlug(slug);
-            if (tag == null)
-            {
-                return NotFound();
-            }
-            var posts = await _unitOfWork.PostRepository.GetPostByTagPaging(slug, page, 2);
-            return View(new PostListByTagViewModel()
-            {
-                Posts = posts,
-                Tag = tag
-            });
-        }
+            Posts = posts,
+            Tag = tag
+        });
     }
 }

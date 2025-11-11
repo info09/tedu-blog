@@ -1,20 +1,19 @@
-﻿namespace TeduBlog.Core.SeedWorks.Constants
+namespace TeduBlog.Core.SeedWorks.Constants;
+
+public static class UrlConstant
 {
-    public static class UrlConstant
-    {
-        public static string Posts = "/posts";
-        public static string Home = "/";
-        public static string About = "/about";
-        public static string Contact = "/contact";
-        public static string PostsByCategorySlug = "/posts/{0}";
-        public static string PostDetails = "/post/{0}";
-        public static string PostsByTagSlug = "/tag/{0}";
-        public static string Login = "/login";
-        public static string Register = "/register";
-        public static string Profile = "/profile";
-        public static string Author = "/author/{0}";
-		public static string Series = "/series";
-		public static string SeriesDetail = "/series/{0}";
-		public static string ChangePassword = "/change-password";
-    }
+    public const string Posts = "/posts";
+    public const string Home = "/";
+    public const string About = "/about";
+    public const string Contact = "/contact";
+    public const string PostsByCategorySlug = "/posts/{0}";
+    public const string PostDetails = "/post/{0}";
+    public const string PostsByTagSlug = "/tag/{0}";
+    public const string Login = "/login";
+    public const string Register = "/register";
+    public const string Profile = "/profile";
+    public const string Author = "/author/{0}";
+    public const string Series = "/series";
+    public const string SeriesDetail = "/series/{0}";
+    public const string ChangePassword = "/change-password";
 }

@@ -1,12 +1,11 @@
-﻿namespace TeduBlog.Core.Models
-{
-    public class PagedResult<T> : PagedResultBase where T : class
-    {
-        public List<T> Items { get; set; }
+namespace TeduBlog.Core.Models;
 
-        public PagedResult()
-        {
-            Items = new List<T>();
-        }
+public class PagedResult<T> : PagedResultBase where T : class
+{
+    public List<T> Items { get; set; }
+
+    public PagedResult()
+    {
+        Items = new List<T>();
     }
 }

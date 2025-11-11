@@ -1,7 +1,6 @@
-﻿namespace TeduBlog.Core.Models.Content.Post
+namespace TeduBlog.Core.Models.Content.Post;
+
+public class ReturnBackRequest
 {
-    public class ReturnBackRequest
-    {
-        public string Reason { set; get; } = default!;
-    }
+    public string Reason { set; get; } = default!;
 }

@@ -1,17 +1,18 @@
-﻿using AutoMapper.Internal;
+using AutoMapper.Internal;
+
 using Microsoft.OpenApi.Models;
+
 using Swashbuckle.AspNetCore.SwaggerGen;
 
-namespace TeduBlog.Api.Filters
+namespace TeduBlog.Api.Filters;
+
+public class SwaggerNullableParameterFilter : IParameterFilter
 {
-    public class SwaggerNullableParameterFilter : IParameterFilter
+    public void Apply(OpenApiParameter parameter, ParameterFilterContext context)
     {
-        public void Apply(OpenApiParameter parameter, ParameterFilterContext context)
+        if (!parameter.Schema.Nullable && (context.ApiParameterDescription.Type.IsNullableType() || !context.ApiParameterDescription.Type.IsValueType))
         {
-            if (!parameter.Schema.Nullable && (context.ApiParameterDescription.Type.IsNullableType() || !context.ApiParameterDescription.Type.IsValueType))
-            {
-                parameter.Schema.Nullable = true;
-            }
+            parameter.Schema.Nullable = true;
         }
     }
 }

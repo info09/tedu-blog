@@ -1,8 +1,7 @@
-﻿namespace TeduBlog.Core.Models.System.Role
+namespace TeduBlog.Core.Models.System.Role;
+
+public class CreateUpdateRoleRequest
 {
-    public class CreateUpdateRoleRequest
-    {
-        public string Name { get; set; } = default!;
-        public string DisplayName { get; set; } = default!;
-    }
+    public string Name { get; set; } = default!;
+    public string DisplayName { get; set; } = default!;
 }

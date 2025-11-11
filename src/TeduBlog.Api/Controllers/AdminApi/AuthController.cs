@@ -1,11 +1,11 @@
-﻿using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-
 using System.IdentityModel.Tokens.Jwt;
 using System.Reflection;
 using System.Security.Claims;
 using System.Text.Json;
+
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 using TeduBlog.Api.Extensions;
 using TeduBlog.Api.Services;
@@ -36,13 +36,22 @@ namespace TeduBlog.Api.Controllers.AdminApi
         [HttpPost]
         public async Task<ActionResult<AuthenticatedResult>> Login([FromBody] LoginRequest request)
         {
-            if (request == null) return BadRequest("Invalid request");
+            if (request == null)
+            {
+                return BadRequest("Invalid request");
+            }
 
             var user = await _userManager.Users.FirstOrDefaultAsync(i => i.UserName == request.UserName);
-            if (user == null || user.IsActive == false || user.LockoutEnabled) return BadRequest("Đăng nhập không đúng");
+            if (user == null || !user.IsActive || user.LockoutEnabled)
+            {
+                return BadRequest("Đăng nhập không đúng");
+            }
 
             var result = await _signInManager.PasswordSignInAsync(user, request.Password, false, true);
-            if (!result.Succeeded) return BadRequest("Đăng nhập không đúng");
+            if (!result.Succeeded)
+            {
+                return BadRequest("Đăng nhập không đúng");
+            }
 
             var roles = await _userManager.GetRolesAsync(user);
             var permissions = await this.GetPermissionsByUserIdAsync(user.Id.ToString());

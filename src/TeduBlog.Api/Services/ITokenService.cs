@@ -1,11 +1,10 @@
-﻿using System.Security.Claims;
+using System.Security.Claims;
 
-namespace TeduBlog.Api.Services
+namespace TeduBlog.Api.Services;
+
+public interface ITokenService
 {
-    public interface ITokenService
-    {
-        string GenerateAccessToken(IEnumerable<Claim> claims);
-        string GenerateRefreshToken();
-        ClaimsPrincipal GetPrincipalFromExpiredToken(string token);
-    }
+    string GenerateAccessToken(IEnumerable<Claim> claims);
+    string GenerateRefreshToken();
+    ClaimsPrincipal GetPrincipalFromExpiredToken(string token);
 }

@@ -1,5 +1,7 @@
-﻿using AutoMapper;
+using AutoMapper;
+
 using Microsoft.EntityFrameworkCore;
+
 using TeduBlog.Core.Domain.Royalty;
 using TeduBlog.Core.Models;
 using TeduBlog.Core.Models.Royalty;

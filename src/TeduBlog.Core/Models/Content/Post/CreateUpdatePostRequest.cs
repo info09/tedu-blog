@@ -1,27 +1,26 @@
-﻿using AutoMapper;
-
 using System.ComponentModel.DataAnnotations;
 
-namespace TeduBlog.Core.Models.Content.Post
+using AutoMapper;
+
+namespace TeduBlog.Core.Models.Content.Post;
+
+public class CreateUpdatePostRequest
 {
-    public class CreateUpdatePostRequest
+    public required string Name { get; set; }
+    public required string Slug { get; set; }
+    [MaxLength(500)]
+    public string? Description { get; set; }
+    public string? Thumbnail { get; set; }
+    public Guid CategoryId { get; set; }
+    public string? Content { get; set; }
+    public string? Source { get; set; }
+    public string[] Tags { get; set; } = [];
+    public string? SeoDescription { get; set; }
+    public class AutoMapperProfiles : Profile
     {
-        public required string Name { get; set; }
-        public required string Slug { get; set; }
-        [MaxLength(500)]
-        public string? Description { get; set; }
-        public string? Thumbnail { get; set; }
-        public Guid CategoryId { get; set; }
-        public string? Content { get; set; }
-        public string? Source { get; set; }
-        public string[] Tags { get; set; } = [];
-        public string? SeoDescription { get; set; }
-        public class AutoMapperProfiles : Profile
+        public AutoMapperProfiles()
         {
-            public AutoMapperProfiles()
-            {
-                CreateMap<CreateUpdatePostRequest, Domain.Content.Post>();
-            }
+            CreateMap<CreateUpdatePostRequest, Domain.Content.Post>();
         }
     }
 }

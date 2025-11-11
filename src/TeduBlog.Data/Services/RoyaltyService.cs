@@ -1,13 +1,11 @@
-﻿using Dapper;
+using System.Data;
+
+using Dapper;
+
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
-using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 using TeduBlog.Core.Domain.Identity;
 using TeduBlog.Core.Domain.Royalty;
 using TeduBlog.Core.SeedWorks;

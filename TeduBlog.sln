@@ -15,6 +15,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TeduBlog.WebApp", "src\Tedu
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution", "Solution", "{C26E5C18-86C0-4EF9-A6A8-0DA774874EEC}"
 	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
 		docker-compose.yml = docker-compose.yml
 	EndProjectSection
 EndProject
@@ -49,5 +50,8 @@ Global
 		{E45F19D7-3C0C-41B5-8DE0-AD1A81C0CDA9} = {83D4DA59-52A9-4ABC-BC4F-8C16C4F07A18}
 		{0CEDDA12-32B9-426D-BC66-7E1CCA3D25F8} = {83D4DA59-52A9-4ABC-BC4F-8C16C4F07A18}
 		{ED2CA4CD-DEF4-4569-BC8E-5033464D4506} = {83D4DA59-52A9-4ABC-BC4F-8C16C4F07A18}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {097CF323-C22B-482F-A61C-8223BA4A7E62}
 	EndGlobalSection
 EndGlobal

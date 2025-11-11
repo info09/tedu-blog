@@ -1,6 +1,8 @@
-﻿using AutoMapper;
+using AutoMapper;
+
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+
 using TeduBlog.Core.Domain.Content;
 using TeduBlog.Core.Domain.Identity;
 using TeduBlog.Core.Models;

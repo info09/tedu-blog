@@ -1,21 +1,21 @@
-﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
+
 using TeduBlog.Data;
 
-namespace TeduBlog.Api
+namespace TeduBlog.Api;
+
+public static class MigrationManager
 {
-    public static class MigrationManager
+    public static WebApplication MigrateDatabase(this WebApplication app)
     {
-        public static WebApplication MigrateDatabase(this WebApplication app)
+        using (var scope = app.Services.CreateScope())
         {
-            using (var scope = app.Services.CreateScope())
+            using (var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>())
             {
-                using (var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>())
-                {
-                    context.Database.Migrate();
-                    new DataSeeder().SeedAsync(context).Wait();
-                }
+                context.Database.Migrate();
+                new DataSeeder().SeedAsync(context).Wait();
             }
-            return app;
         }
+        return app;
     }
 }

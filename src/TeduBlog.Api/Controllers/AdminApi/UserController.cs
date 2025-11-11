@@ -1,8 +1,10 @@
-﻿using AutoMapper;
+using AutoMapper;
+
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+
 using TeduBlog.Api.Extensions;
 using TeduBlog.Api.Filters;
 using TeduBlog.Core.Domain.Identity;
@@ -34,7 +36,9 @@ namespace TeduBlog.Api.Controllers.AdminApi
         {
             var user = await _userManager.FindByIdAsync(id.ToString());
             if (user == null)
+            {
                 return NotFound();
+            }
 
             var userDto = _mapper.Map<UserDto>(user);
             var roles = await _userManager.GetRolesAsync(user);
@@ -70,18 +74,19 @@ namespace TeduBlog.Api.Controllers.AdminApi
         public async Task<IActionResult> CreateUser([FromBody] CreateUserRequest request)
         {
             if (await _userManager.FindByNameAsync(request.UserName) != null)
+            {
                 return BadRequest();
+            }
 
             if (await _userManager.FindByEmailAsync(request.Email) != null)
+            {
                 return BadRequest();
+            }
 
             var user = _mapper.Map<CreateUserRequest, AppUser>(request);
             var result = await _userManager.CreateAsync(user, request.Password);
 
-            if (result.Succeeded)
-                return Ok();
-
-            return BadRequest(string.Join("<br>", result.Errors.Select(i => i.Description)));
+            return result.Succeeded ? Ok() : BadRequest(string.Join("<br>", result.Errors.Select(i => i.Description)));
         }
 
         [HttpPut("{id}")]
@@ -90,7 +95,9 @@ namespace TeduBlog.Api.Controllers.AdminApi
         {
             var user = await _userManager.FindByIdAsync(id.ToString());
             if (user == null)
+            {
                 return NotFound();
+            }
 
             _mapper.Map(request, user);
             var result = await _userManager.UpdateAsync(user);
@@ -123,7 +130,9 @@ namespace TeduBlog.Api.Controllers.AdminApi
         {
             var user = await _userManager.FindByIdAsync(id.ToString());
             if (user == null)
+            {
                 return NotFound();
+            }
 
             var token = await _userManager.GenerateChangeEmailTokenAsync(user, request.Email);
             var result = await _userManager.ChangeEmailAsync(user, request.Email, token);
@@ -140,7 +149,9 @@ namespace TeduBlog.Api.Controllers.AdminApi
         {
             var user = await _userManager.FindByIdAsync(id.ToString());
             if (user == null)
+            {
                 return NotFound();
+            }
 
             user.PasswordHash = _userManager.PasswordHasher.HashPassword(user, request.NewPassword);
             var result = await _userManager.UpdateAsync(user);
@@ -157,7 +168,9 @@ namespace TeduBlog.Api.Controllers.AdminApi
         {
             var user = await _userManager.FindByIdAsync(User.GetUserId().ToString());
             if (user == null)
+            {
                 return NotFound();
+            }
 
             var result = await _userManager.ChangePasswordAsync(user, request.OldPassword, request.NewPassword);
             if (!result.Succeeded)
