@@ -4,6 +4,6 @@ namespace TeduBlog.WebApp.Models
 {
     public class HomeViewModel
     {
-        public List<PostInListDto> LastestPosts { get; set; }
+        public List<PostInListDto>? LastestPosts { get; set; }
     }
 }

@@ -1,15 +1,15 @@
 ﻿@using TeduBlog.Core.SeedWorks.Constants
 @model PostListByTagViewModel
 @{
-    ViewData["Title"] = Model.Tag.Name + (Model.Posts.CurrentPage > 1 ? $" Trang {Model.Posts.CurrentPage}" : "");
-    ViewData["Description"] = "Bài viết theo tag: " + Model.Tag.Name + (Model.Posts.CurrentPage > 1 ? $" Trang {Model.Posts.CurrentPage}" : "");
+    ViewData["Title"] = Model.Tag?.Name + (Model.Posts?.CurrentPage > 1 ? $" Trang {Model.Posts.CurrentPage}" : "");
+    ViewData["Description"] = "Bài viết theo tag: " + Model.Tag?.Name + (Model.Posts?.CurrentPage > 1 ? $" Trang {Model.Posts.CurrentPage}" : "");
 }
 <header class="masthead" style="background-image: url('/assets/img/home-bg.jpg')">
     <div class="container position-relative px-4 px-lg-5">
         <div class="row gx-4 gx-lg-5 justify-content-center">
             <div class="col-md-10 col-lg-8 col-xl-7">
                 <div class="site-heading">
-                    <h1>Tag: @Model.Tag.Name</h1>
+                    <h1>Tag: @Model.Tag?.Name</h1>
                 </div>
             </div>
         </div>
@@ -18,7 +18,7 @@
 <div class="container px-4 px-lg-5">
     <div class="row gx-4 gx-lg-5 justify-content-center">
         <div class="col-md-10 col-lg-8 col-xl-7">
-            @foreach (var item in Model.Posts.Items)
+            @foreach (var item in Model.Posts!.Items)
             {
                 <!-- Post preview-->
                 <div class="post-preview">

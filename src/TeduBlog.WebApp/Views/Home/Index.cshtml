@@ -21,22 +21,25 @@
 <div class="container px-4 px-lg-5">
     <div class="row gx-4 gx-lg-5 justify-content-center">
         <div class="col-md-10 col-lg-8 col-xl-7">
-            @foreach (var item in Model.LastestPosts)
+            @if (Model.LastestPosts != null)
             {
-                <!-- Post preview-->
-                <div class="post-preview">
-                    <a href="@string.Format(UrlConstant.PostDetails, item.Slug)" title="@item.Name">
-                        <h2 class="post-title">@item.Name</h2>
-                        <h3 class="post-subtitle">@item.Description</h3>
-                    </a>
-                    <p class="post-meta">
-                        Posted by
-                        <a href="#!">@item.AuthorName</a>
-                        on @item.DateCreated.ToLongTimeString()
-                    </p>
-                </div>
-                <!-- Divider-->
-                <hr class="my-4" />
+                @foreach (var item in Model.LastestPosts)
+                {
+                    <!-- Post preview-->
+                    <div class="post-preview">
+                        <a href="@string.Format(UrlConstant.PostDetails, item.Slug)" title="@item.Name">
+                            <h2 class="post-title">@item.Name</h2>
+                            <h3 class="post-subtitle">@item.Description</h3>
+                        </a>
+                        <p class="post-meta">
+                            Posted by
+                            <a href="#!">@item.AuthorName</a>
+                            on @item.DateCreated.ToLongTimeString()
+                        </p>
+                    </div>
+                    <!-- Divider-->
+                    <hr class="my-4" />
+                }
             }
             <!-- Pager-->
             <div class="d-flex justify-content-end mb-4"><a class="btn btn-primary text-uppercase" href="@UrlConstant.Posts">Older Posts →</a></div>

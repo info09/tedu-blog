@@ -1,8 +1,8 @@
 ﻿@using TeduBlog.Core.SeedWorks.Constants
 @model PostListByCategoryViewModel
 @{
-    ViewData["Title"] = Model.Category.Name + (Model.Posts.CurrentPage > 1 ? $" - Trang {Model.Posts.CurrentPage}" : "");
-    ViewData["Description"] = Model.Category.SeoDescription + (Model.Posts.CurrentPage > 1 ? $" - Trang {Model.Posts.CurrentPage}" : "");
+    ViewData["Title"] = Model.Category?.Name + (Model.Posts?.CurrentPage > 1 ? $" - Trang {Model.Posts.CurrentPage}" : "");
+    ViewData["Description"] = Model.Category?.SeoDescription + (Model.Posts?.CurrentPage > 1 ? $" - Trang {Model.Posts.CurrentPage}" : "");
 }
 <!-- Page Header-->
 <header class="masthead" style="background-image: url('/assets/img/home-bg.jpg')">
@@ -10,7 +10,7 @@
         <div class="row gx-4 gx-lg-5 justify-content-center">
             <div class="col-md-10 col-lg-8 col-xl-7">
                 <div class="site-heading">
-                    <h1>@Model.Category.Name</h1>
+                    <h1>@Model.Category?.Name</h1>
                 </div>
             </div>
         </div>
@@ -20,7 +20,7 @@
 <div class="container px-4 px-lg-5">
     <div class="row gx-4 gx-lg-5 justify-content-center">
         <div class="col-md-10 col-lg-8 col-xl-7">
-            @foreach (var item in Model.Posts.Items)
+            @foreach (var item in Model.Posts!.Items)
             {
                 <!-- Post preview-->
                 <div class="post-preview">

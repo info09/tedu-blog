@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using TeduBlog.Core.Domain.Content;
 
 namespace TeduBlog.Core.Models.Content.Post
 {
@@ -13,9 +12,9 @@ namespace TeduBlog.Core.Models.Content.Post
         public string? SeoDescription { get; set; }
         public DateTime? DateModified { get; set; }
 
-        public class AutoMapperProfiles : Profile
+        public class AutoMapperProfile : Profile
         {
-            public AutoMapperProfiles()
+            public AutoMapperProfile()
             {
                 CreateMap<Domain.Content.Post, PostDto>();
             }

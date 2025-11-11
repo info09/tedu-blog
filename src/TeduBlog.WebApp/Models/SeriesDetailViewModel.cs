@@ -5,8 +5,8 @@ namespace TeduBlog.WebApp.Models
 {
     public class SeriesDetailViewModel
     {
-        public SeriesDto Series { get; set; }
+        public SeriesDto? Series { get; set; }
 
-        public PagedResult<PostInListDto> Posts { get; set; }
+        public PagedResult<PostInListDto>? Posts { get; set; }
     }
 }

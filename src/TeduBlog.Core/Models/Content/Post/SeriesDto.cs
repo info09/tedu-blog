@@ -11,9 +11,9 @@ namespace TeduBlog.Core.Models.Content.Post
         [MaxLength(250)]
         public string? Thumbnail { set; get; }
         public string? Content { get; set; }
-        public class AutoMapperProfiles : Profile
+        public class AutoMapperProfile : Profile
         {
-            public AutoMapperProfiles()
+            public AutoMapperProfile()
             {
                 CreateMap<Series, SeriesDto>();
             }
